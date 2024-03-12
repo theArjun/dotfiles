@@ -1,0 +1,18 @@
+name: Soudan-backend
+root: ~/workspace/wesionary/Soudan-backend/
+
+pre_window: source .venv/bin.activate
+
+startup_window: editor
+
+windows:
+  - editor: nvim .
+  - server: soudan
+  - lazygit: lazygit
+  - ngrok: ng 8000
+  - redis: redis-server
+  - emulator:
+      panes:
+        - emulator -avd seller
+        - emulator -avd buyer
+  - pr : pr

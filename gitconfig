@@ -1,0 +1,41 @@
+[user]
+	email = 33110520+theArjun@users.noreply.github.com
+	name = thearjun
+	signingkey = EF89501864ACD9C4
+[color]
+  status = auto
+  diff = auto
+  branch = auto
+  interactive = auto
+[commit]
+	gpgsign = false
+[gpg]
+	program = gpg
+[core]
+	autocrlf = input
+  editor = nvim
+  pager = delta
+  excludefile = ~/.gitignore
+  quotepath = false
+[interactive]
+  diffFilter = delta --color-only
+[delta]
+  navigate = true    # use n and N to move between diff sections
+  light = false      # set to true if you're in a terminal w/ a light background color (e.g. the default macOS terminal)
+  side-by-side = true
+  colorMoved = default
+  line-numbers = true
+  hyperlinks = true
+[merge]
+  conflictstyle = diff3
+  tool = opendiff
+  summary = true
+[alias]
+  wip = for-each-ref --sort='authordate:iso8601' --format=' %(color:green)%(authordate:relative)%09%(color:white)%(refname:short)' refs/heads
+[pull]
+	rebase = false
+[diff]
+  colorMoved = default
+  algorithm = histogram
+[branch]
+  sort = -committerdate

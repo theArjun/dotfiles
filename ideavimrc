@@ -1,0 +1,59 @@
+" .ideavimrc is a configuration file for IdeaVim plugin. It uses
+"   the same commands as the original .vimrc configuration.
+" You can find a list of commands here: https://jb.gg/h38q75
+" Find more examples here: https://jb.gg/share-ideavimrc
+
+
+"" -- Suggested options --
+" Show a few lines of context around the cursor. Note that this makes the
+" text scroll if you mouse-click near the start or end of the window.
+let mapleader=" "
+set scrolloff=5
+
+" Do incremental searching.
+set incsearch
+set number relativenumber
+set surround
+set multiple-cursors
+set commentary
+set argtextobj
+set easymotion
+
+" Don't use Ex mode, use Q for formatting.
+map Q gq
+
+" --- Enable IdeaVim plugins https://jb.gg/ideavim-plugins
+
+" Highlight copied text
+Plug 'machakann/vim-highlightedyank'
+" Commentary plugin
+Plug 'tpope/vim-commentary'
+Plug 'terryma/vim-multiple-cursors'
+
+" --- Git ---
+nnoremap push :action Vcs.Push<CR>
+nnoremap ya :action Annotate<CR>
+nnoremap gb :action Git.Branches<cr>
+nnoremap gp :action Git.Pull<cr>
+nnoremap ct :action GotoAction<CR>
+
+" --- Execution ---
+nnoremap run :action Run<CR>
+nnoremap debug :action Debug<CR>
+nnoremap brk :action ToggleLineBreakpoint<CR>
+
+" --- Surround ---
+nmap <leader>so :action SurroundWith<CR>
+
+" --- Format ---
+nmap ff :action ReformatCode<CR>
+
+" --- Terminal ---
+nnoremap tt :action ActivateTerminalToolWindow<CR>
+nnoremap th : action HideActiveWindow<CR>
+
+" --- IDE ---
+nnoremap copy :action CopyPathFromRepositoryRootProvider<CR>
+nnoremap nav :action SelectInProjectView<CR>
+nnoremap ren :action RenameElement<CR>
+nnoremap goto :action GotoDeclaration<CR>
