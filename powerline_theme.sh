@@ -92,5 +92,6 @@ if [ -z $TMUX_POWERLINE_RIGHT_STATUS_SEGMENTS ]; then
 	TMUX_POWERLINE_RIGHT_STATUS_SEGMENTS=(
 	  "pwd 89 211" \
 		"nepali_date 148 234" \
+		"nepse 64 255" \
 	)
 fi
