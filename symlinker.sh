@@ -43,3 +43,7 @@ ln -sf ${cwd}/*.sh $HOME/.config/scripts
 ln -sf ${parent_dir}/my-nvim-config ~/.config/nvim
 # Move tmuxinator
 ln -sf ${cwd}/tmuxinator ~/.config/tmuxinator
+
+# Add custom segements in tmux powerline
+mkdir -p ~/.config/tmux-powerline/segments
+ln -sf ${cwd}/scripts/nepali_date.sh ~/.config/tmux-powerline/segments/

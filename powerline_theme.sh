@@ -91,8 +91,6 @@ fi
 if [ -z $TMUX_POWERLINE_RIGHT_STATUS_SEGMENTS ]; then
 	TMUX_POWERLINE_RIGHT_STATUS_SEGMENTS=(
 	  "pwd 89 211" \
-		"earthquake 3 0" \
-		"macos_notification_count 29 255" \
-		"time 235 136" \
+		"nepali_date 148 234" \
 	)
 fi
