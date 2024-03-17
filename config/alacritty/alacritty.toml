@@ -20,7 +20,5 @@ hide_when_typing = true
 
 [keyboard]
 bindings = [
-  { key = "N", mods = "Control|Shift", action = "CreateNewTab" },
-  { key = "H", mods = "Control|Shift", action = "HideOtherApplications" },
   { key = "F", mods = "Control|Shift", action = "ToggleSimpleFullscreen" },
 ]
