@@ -4,8 +4,7 @@ alias a="source .venv/bin/activate"
 alias d="source deactivate"
 alias idiff="git diff --name-only | grep .py | xargs isort"
 alias fdiff="git diff --name-only | grep .py | xargs flake8"
-alias rf="git diff --name-only | grep .py | xargs ruff format"
-alias rff="git diff --name-only | grep .py | xargs ruff format --fix"
+alias rdiff="git diff --name-only | grep .py | xargs ruff format"
 
 # Django
 alias dj="python manage.py"
