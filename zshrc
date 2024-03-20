@@ -43,6 +43,15 @@ plugins=(
  direnv
 )
 
+# There can be .secrets dir and envvars.zsh file in the .secrets dir.
+# If there is, source it.
+if [ -d "$HOME/.secrets" ]; then
+	if [ -f "$HOME/.secrets/envvars.zsh" ]; then
+		source "$HOME/.secrets/envvars.zsh"
+	fi
+fi
+
+
 # FZF
 # Enable preview window with bat (syntax highlighting)
 export FZF_PREVIEW_COMMAND='[[ $(file --mime {}) =~ binary ]] && echo {} || bat --style=numbers,changes --color=always {} 2> /dev/null | sed "s/\[[0-9;]*m//g"'

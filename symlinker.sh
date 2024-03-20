@@ -39,6 +39,11 @@ if [ ! -d "$HOME/.config/scripts" ]; then
 fi
 ln -sf ${cwd}/*.sh $HOME/.config/scripts
 
+# Check if there is secrets directory. If exists, symlink in $HOME
+if [ -d "$cwd/secrets" ]; then
+	ln -sf ${cwd}/secrets $HOME/.secrets
+fi
+
 # Move nvim
 ln -sf ${parent_dir}/my-nvim-config ~/.config/nvim
 # Move tmuxinator
