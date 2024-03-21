@@ -20,6 +20,10 @@ alias djrsp="python manage.py runserver_plus"
 alias djl="djlint --reformat --format-css"
 alias djd="django_doctor fix --address=0.0.0.0 --port=9001"
 
+# Flutter
+alias frd="flutter run --flavor dev"
+alias frb="flutter build apk --flavor dev"
+
 # Git aliases
 alias gfh="git-file-history"
 alias lg="lazygit"
@@ -40,7 +44,7 @@ alias :q="exit"
 
 # Custom
 alias ed="nvim ~/.zshrc"
-alias eda="nvim ~/.zsh_aliases"
+alias eda="nvim ~/.zsh_aliases.zsh"
 alias so="source ~/.zshrc"
 alias ng="ngrok http --domain=previously-choice-puma.ngrok-free.app"
 alias nv="fd --type f --hidden --exclude .git | fzf-tmux -p | xargs nvim"
