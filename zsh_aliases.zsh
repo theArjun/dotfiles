@@ -22,7 +22,7 @@ alias djd="django_doctor fix --address=0.0.0.0 --port=9001"
 
 # Flutter
 alias frd="flutter run --flavor dev"
-alias frb="flutter build apk --flavor dev"
+alias frb="flutter build apk --flavor dev --debug"
 
 # Git aliases
 alias gfh="git-file-history"
