@@ -5,6 +5,7 @@ alias d="source deactivate"
 alias idiff="git diff --name-only | grep .py | xargs isort"
 alias fdiff="git diff --name-only | grep .py | xargs flake8"
 alias rdiff="git diff --name-only | grep .py | xargs ruff format"
+alias upi="uv pip install"
 
 # Django
 alias dj="python manage.py"
