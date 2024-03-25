@@ -28,6 +28,23 @@ alias frb="flutter build apk --flavor dev --debug"
 alias gfh="git-file-history"
 alias lg="lazygit"
 
+# Docker aliases
+alias dc="docker-compose"
+alias dcb="docker-compose build"
+alias dcd="docker-compose down"
+alias dce="docker-compose exec"
+alias dcl="docker-compose logs"
+alias dcp="docker-compose ps"
+alias dcr="docker-compose run"
+alias dcs="docker-compose stop"
+alias dcu="docker-compose up"
+alias dcv="docker-compose volume"
+alias dcvls="docker volume ls"
+alias dcvrm="docker volume rm"
+alias dcvprune="docker volume prune"
+alias dcvrmall="docker volume rm $(docker volume ls -q)"
+alias dcvpruneall="docker volume prune -f"
+
 # YT
 alias ytmp="youtube-dl --extract-audio --audio-format mp3"
 alias ytpl='yt-dlp --extract-audio --audio-format mp3 -o "%(title)s.%(ext)s"'
