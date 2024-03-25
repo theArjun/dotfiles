@@ -56,6 +56,7 @@ alias cat="bat --paging=never"
 alias myip="ifconfig en0 | grep inet | grep -v inet6 | cut -d ' ' -f2"
 # Execute command from history
 alias h="cat ~/.zsh_history | fzf | awk '{print $2}' | xargs -I % sh -c '%'"
+alias ldo="lazydocker"
 
 # Tmux
 alias t="tmux"
