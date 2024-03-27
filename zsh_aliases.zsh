@@ -30,7 +30,7 @@ alias gfh="git-file-history"
 alias lg="lazygit"
 
 # Java
-alias jgf="java -jar ~/tools/gjf.jar --replace"
+alias gjf="java -jar ~/tools/gjf.jar --replace"
 
 # Docker aliases
 alias dc="docker-compose"
