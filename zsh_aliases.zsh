@@ -29,6 +29,9 @@ alias fba="flutter build apk --flavor dev --debug"
 alias gfh="git-file-history"
 alias lg="lazygit"
 
+# Java
+alias jgf="java -jar ~/tools/gjf.jar --replace"
+
 # Docker aliases
 alias dc="docker-compose"
 alias dcb="docker-compose build"
