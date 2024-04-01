@@ -13,6 +13,7 @@ export PATH="$HOME/executables:$PATH"
 export PATH="$HOME/Library/Android/sdk/emulator:$PATH"
 export PATH="$HOME/.cargo/bin:$PATH"
 export PATH="/opt/homebrew/opt/openjdk/bin:$PATH"
+export PATH="$HOME/tools/flutter/bin:$PATH"
 
 # For compilers to find openjdk you may need to set:
 export CPPFLAGS="-I/opt/homebrew/opt/openjdk/include"
