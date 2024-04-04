@@ -7,7 +7,7 @@ opacity = 1
 
 [font]
 normal = { family = "JetbrainsMono Nerd Font" }
-size = 14 
+size = 20 
 
 [terminal]
 osc52 = "CopyPaste"

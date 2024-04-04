@@ -27,6 +27,9 @@ source ~/.git_aliases.zsh
 # Functions
 source ~/.zsh_functions.zsh
 
+# Rye
+source "$HOME/.rye/env"
+
 # Environment Variables
 export EDITOR="nvim"
 
