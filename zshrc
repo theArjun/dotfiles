@@ -14,6 +14,7 @@ export PATH="$HOME/Library/Android/sdk/emulator:$PATH"
 export PATH="$HOME/.cargo/bin:$PATH"
 export PATH="/opt/homebrew/opt/openjdk/bin:$PATH"
 export PATH="$HOME/.rbenv/bin:$PATH"
+export PATH="$HOME/tools/flutter/bin:$PATH"
 
 # For compilers to find openjdk you may need to set:
 export CPPFLAGS="-I/opt/homebrew/opt/openjdk/include"
@@ -26,6 +27,9 @@ source ~/.zsh_aliases.zsh
 source ~/.git_aliases.zsh
 # Functions
 source ~/.zsh_functions.zsh
+
+# Rye
+source "$HOME/.rye/env"
 
 # Environment Variables
 export EDITOR="nvim"
