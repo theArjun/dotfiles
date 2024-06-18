@@ -6,7 +6,7 @@ startup_mode = "maximized"
 opacity = 1
 
 [font]
-normal = { family = "JetbrainsMono Nerd Font" }
+normal = { family = "IntoneMono Nerd Font" }
 size = 20 
 
 [terminal]
