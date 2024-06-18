@@ -13,6 +13,7 @@ export PATH="$HOME/executables:$PATH"
 export PATH="$HOME/Library/Android/sdk/emulator:$PATH"
 export PATH="$HOME/.cargo/bin:$PATH"
 export PATH="/opt/homebrew/opt/openjdk/bin:$PATH"
+export PATH="$HOME/.rbenv/bin:$PATH"
 export PATH="$HOME/tools/flutter/bin:$PATH"
 
 # For compilers to find openjdk you may need to set:
@@ -84,3 +85,4 @@ eval "$(pyenv init -)"
 # Starship
 eval "$(starship init zsh)"
 eval "$(direnv hook zsh)"
+eval "$(rbenv init -)"
