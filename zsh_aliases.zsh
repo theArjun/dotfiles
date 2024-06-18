@@ -1,7 +1,6 @@
-# Python
 alias pyt="pytest"
 alias a="source .venv/bin/activate"
-alias d="source deactivate"
+alias d="deactivate"
 alias idiff="git diff --name-only | grep .py | xargs isort"
 alias fdiff="git diff --name-only | grep .py | xargs flake8"
 alias rdiff="git diff --name-only | grep .py | xargs ruff format"
@@ -24,6 +23,8 @@ alias djd="django_doctor fix --address=0.0.0.0 --port=9001"
 # Flutter
 alias frd="flutter run --flavor dev"
 alias fba="flutter build apk --flavor dev --debug"
+alias fcl="flutter clean"
+alias fpcl="flutter pub cache clean"
 
 # Git aliases
 alias gfh="git-file-history"
@@ -77,7 +78,7 @@ alias c="cz commit"
 alias cat="bat --paging=never"
 alias myip="ifconfig en0 | grep inet | grep -v inet6 | cut -d ' ' -f2"
 # Execute command from history
-alias h="cat ~/.zsh_history | fzf | awk '{print $2}' | xargs -I % sh -c '%'"
+alias h="cat ~/.zsh_history | fzf | awk '{print \$2}' | tee >(xargs -I % echo '%') | xargs -I % sh -c '%'"
 alias ldo="lazydocker"
 
 # Tmux
