@@ -47,7 +47,6 @@ alias dcv="docker-compose volume"
 alias dcvls="docker volume ls"
 alias dcvrm="docker volume rm"
 alias dcvprune="docker volume prune"
-alias dcvrmall="docker volume rm $(docker volume ls -q)"
 alias dcvpruneall="docker volume prune -f"
 
 # YT
