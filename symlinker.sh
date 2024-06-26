@@ -25,10 +25,6 @@ ln -sf "${cwd}/config/alacritty/alacritty.toml" "$HOME/.config/alacritty/alacrit
 mkdir -p "$HOME/.config/lazygit"
 ln -sf "${cwd}/config/lazygit/config.yml" "$HOME/.config/lazygit/config.yml"
 
-# Symlink neovide config
-mkdir -p "$HOME/.config/neovide"
-ln -sf "${cwd}/config/neovide/config.toml" "$HOME/.config/neovide/config.toml"
-
 # Symlink scripts directory
 mkdir -p "$HOME/.config/scripts"
 ln -sf "${cwd}/*.sh" "$HOME/.config/scripts"
