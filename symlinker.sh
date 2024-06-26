@@ -1,8 +1,9 @@
-# Get the current pwd and store it to variable cwd
-cwd=$(pwd)
-parent_dir=$(dirname $(pwd))
+#!/bin/bash
 
-# Symlink this repo files to the configuration dotfiles.
+# Get the current working directory and its parent directory
+cwd=$(pwd)
+parent_dir=$(dirname "$cwd")
+
 ln -sf ${cwd}/zshrc ~/.zshrc
 ln -sf ${cwd}/ideavimrc ~/.ideavimrc
 ln -sf ${cwd}/gitconfig ~/.gitconfig
@@ -12,44 +13,36 @@ ln -sf ${cwd}/zsh_functions.zsh ~/.zsh_functions.zsh
 ln -sf ${cwd}/git_aliases.zsh ~/.git_aliases.zsh
 ln -sf ${cwd}/powerline_theme.sh ~/.tmux/plugins/tmux-powerline/themes/custom.sh
 
-# Check if .config directory exists in $HOME
-# If not, create it and symlink the config files
-# for alacritty
-if [ ! -d "$HOME/.config" ]; then
-  mkdir $HOME/.config
-fi
-# Also check if alacritty directory exists in .config
-# If not, create it and symlink the config files
-if [ ! -d "$HOME/.config/alacritty" ]; then
-  mkdir $HOME/.config/alacritty
-fi
-ln -sf ${cwd}/config/alacritty/alacritty.toml $HOME/.config/alacritty/alacritty.toml
 
-# Also check if lazygit directory exists in .config
-# If not, create it and symlink the config files
-if [ ! -d "$HOME/.config/lazygit" ]; then
-  mkdir $HOME/.config/lazygit
-fi
-ln -sf ${cwd}/config/lazygit/config.yml $HOME/.config/lazygit/config.yml
+# Ensure ~/.config directory exists
+mkdir -p "$HOME/.config"
 
-# Move scripts directory content inside .config and symlink
-# the scripts
-if [ ! -d "$HOME/.config/scripts" ]; then
-  mkdir $HOME/.config/scripts
-fi
-ln -sf ${cwd}/*.sh $HOME/.config/scripts
+# Symlink Alacritty config
+mkdir -p "$HOME/.config/alacritty"
+ln -sf "${cwd}/config/alacritty/alacritty.toml" "$HOME/.config/alacritty/alacritty.toml"
 
-# Check if there is secrets directory. If exists, symlink in $HOME
+# Symlink Lazygit config
+mkdir -p "$HOME/.config/lazygit"
+ln -sf "${cwd}/config/lazygit/config.yml" "$HOME/.config/lazygit/config.yml"
+
+# Symlink neovide config
+mkdir -p "$HOME/.config/neovide"
+ln -sf "${cwd}/config/neovide/config.toml" "$HOME/.config/neovide/config.toml"
+
+# Symlink scripts directory
+mkdir -p "$HOME/.config/scripts"
+ln -sf "${cwd}/*.sh" "$HOME/.config/scripts"
+
+# Symlink secrets directory if it exists
 if [ -d "$cwd/secrets" ]; then
-	ln -sf ${cwd}/secrets $HOME/.secrets
+    ln -sf "${cwd}/secrets" "$HOME/.secrets"
 fi
 
-# Move nvim
-ln -sf ${parent_dir}/my-nvim-config ~/.config/nvim
-# Move tmuxinator
-ln -sf ${cwd}/tmuxinator ~/.config/tmuxinator
+# Symlink Neovim and Tmuxinator configurations
+ln -sf "${parent_dir}/my-nvim-config" "$HOME/.config/nvim"
+ln -sf "${cwd}/tmuxinator" "$HOME/.config/tmuxinator"
 
-# Add custom segements in tmux powerline
-mkdir -p ~/.config/tmux-powerline/segments
-ln -sf ${cwd}/scripts/nepali_date.sh ~/.config/tmux-powerline/segments/
-ln -sf ${cwd}/scripts/nepse.sh ~/.config/tmux-powerline/segments/
+# Add custom segments to tmux-powerline
+mkdir -p "$HOME/.config/tmux-powerline/segments"
+ln -sf "${cwd}/scripts/nepali_date.sh" "$HOME/.config/tmux-powerline/segments/"
+ln -sf "${cwd}/scripts/nepse.sh" "$HOME/.config/tmux-powerline/segments/"
