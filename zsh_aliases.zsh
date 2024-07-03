@@ -26,6 +26,14 @@ alias fba="flutter build apk --flavor dev --debug"
 alias fcl="flutter clean"
 alias fpcl="flutter pub cache clean"
 
+# Postgres
+alias pgstart="brew services start postgresql"
+alias pgstop="brew services stop postgresql"
+alias pgrestart="brew services restart postgresql"
+alias pgcli="psql -U postgres"
+alias pgdump="pg_dump -U postgres"
+alias pgrestore="pg_restore -U postgres"
+
 # Git aliases
 alias gfh="git-file-history"
 alias lg="lazygit"
