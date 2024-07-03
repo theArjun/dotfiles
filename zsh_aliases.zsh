@@ -19,6 +19,7 @@ alias djrs="python manage.py runserver"
 alias djrsp="python manage.py runserver_plus"
 alias djl="djlint --reformat --format-css"
 alias djd="django_doctor fix --address=0.0.0.0 --port=9001"
+alias pm="python manage.py"
 
 # Flutter
 alias frd="flutter run --flavor dev"
