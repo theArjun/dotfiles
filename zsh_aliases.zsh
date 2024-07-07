@@ -5,6 +5,7 @@ alias idiff="git diff --name-only | grep .py | xargs isort"
 alias fdiff="git diff --name-only | grep .py | xargs flake8"
 alias rdiff="git diff --name-only | grep .py | xargs ruff format"
 alias upi="uv pip install"
+alias up="uv pip"
 
 # Django
 alias dj="python manage.py"
@@ -97,3 +98,4 @@ alias tl="tmux list-sessions"
 alias tk="tmux list-keys"
 alias ts="$HOME/.config/scripts/tmux_sessionizer.sh"
 alias tso="tmux source-file ~/.tmux.conf"
+alias tks="tmux kill-server"
