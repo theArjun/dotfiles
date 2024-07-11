@@ -1,8 +1,10 @@
 [window]
 decorations = "Buttonless"
-padding = {x = 5}
+padding = { x = 5, y = 5 }
 dynamic_padding = true
 startup_mode = "maximized"
+dynamic_title = true
+opacity = 0.9
 
 [font]
 normal = { family = "0xProto Nerd Font" }
@@ -11,11 +13,52 @@ size = 20
 [terminal]
 osc52 = "CopyPaste"
 
-[mouse]
-hide_when_typing = true
-
 [keyboard]
 bindings = [
   { key = "F", mods = "Control|Shift", action = "ToggleSimpleFullscreen" },
+  { key = "C", mods = "Control|Shift", action = "Copy" },
+  { key = "V", mods = "Control|Shift", action = "Paste" },
+  { key = "T", mods = "Control|Shift", action = "SpawnNewInstance" },
+  { key = "Plus", mods = "Control|Shift", action = "IncreaseFontSize" },
+  { key = "Minus", mods = "Control|Shift", action = "DecreaseFontSize" },
 ]
 
+[colors]
+[colors.primary]
+background = "#1E1E2E"
+foreground = "#D9E0EE"
+
+[colors.normal]
+black = "#1E1E2E"
+red = "#F28FAD"
+green = "#ABE9B3"
+yellow = "#FAE3B0"
+blue = "#96CDFB"
+magenta = "#F5C2E7"
+cyan = "#89DCEB"
+white = "#D9E0EE"
+
+[colors.bright]
+black = "#575268"
+red = "#F28FAD"
+green = "#ABE9B3"
+yellow = "#FAE3B0"
+blue = "#96CDFB"
+magenta = "#F5C2E7"
+cyan = "#89DCEB"
+white = "#D9E0EE"
+
+[colors.cursor]
+text = "#1E1E2E"
+cursor = "#D9E0EE"
+
+[colors.selection]
+text = "#1E1E2E"
+background = "#D9E0EE"
+
+[cursor]
+style = "Block"
+unfocused_hollow = true
+
+[mouse]
+hide_when_typing = true
