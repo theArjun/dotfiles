@@ -1,3 +1,4 @@
+# Python and Virtual Environment
 alias pyt="pytest"
 alias a="source .venv/bin/activate"
 alias d="deactivate"
@@ -7,7 +8,7 @@ alias rdiff="git diff --name-only | grep .py | xargs ruff format"
 alias upi="uv pip install"
 alias up="uv pip"
 
-# Django
+# Django Management Commands
 alias dj="python manage.py"
 alias djdd="python manage.py dumpdata"
 alias djc="python manage.py check"
@@ -36,14 +37,14 @@ alias pgcli="psql -U postgres"
 alias pgdump="pg_dump -U postgres"
 alias pgrestore="pg_restore -U postgres"
 
-# Git aliases
+# Git Aliases
 alias gfh="git-file-history"
 alias lg="lazygit"
 
 # Java
 alias gjf="java -jar ~/tools/gjf.jar --replace"
 
-# Docker aliases
+# Docker Aliases
 alias dc="docker-compose"
 alias dcb="docker-compose build"
 alias dcd="docker-compose down"
@@ -58,6 +59,8 @@ alias dcvls="docker volume ls"
 alias dcvrm="docker volume rm"
 alias dcvprune="docker volume prune"
 alias dcvpruneall="docker volume prune -f"
+alias dcrestart="docker-compose restart"  # Added alias
+alias dcupb="docker-compose up --build"  # Added alias
 
 # YT
 alias ytmp="youtube-dl --extract-audio --audio-format mp3"
@@ -86,7 +89,6 @@ alias pro="ps aux | fzf --preview 'pstree -p {}' --preview-window=right:70%:wrap
 alias c="cz commit"
 alias cat="bat --paging=never"
 alias myip="ifconfig en0 | grep inet | grep -v inet6 | cut -d ' ' -f2"
-# Execute command from history
 alias h="cat ~/.zsh_history | fzf | awk '{print \$2}' | tee >(xargs -I % echo '%') | xargs -I % sh -c '%'"
 alias ldo="lazydocker"
 
@@ -99,3 +101,9 @@ alias tk="tmux list-keys"
 alias ts="$HOME/.config/scripts/tmux_sessionizer.sh"
 alias tso="tmux source-file ~/.tmux.conf"
 alias tks="tmux kill-server"
+alias tn="tmux new -s"  # Added alias
+alias tr="tmux rename-session"  # Added alias
+
+# System Monitoring and Management
+alias topcpu="ps aux --sort=-%cpu | head"  # Added alias
+alias topmem="ps aux --sort=-%mem | head"  # Added alias

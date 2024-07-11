@@ -8,7 +8,7 @@ opacity = 0.9
 
 [font]
 normal = { family = "0xProto Nerd Font" }
-size = 20 
+size = 16
 
 [terminal]
 osc52 = "CopyPaste"
