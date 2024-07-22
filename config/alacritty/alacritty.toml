@@ -4,7 +4,7 @@ padding = { x = 5, y = 5 }
 dynamic_padding = true
 startup_mode = "maximized"
 dynamic_title = true
-opacity = 0.9
+opacity = 1
 
 [font]
 normal = { family = "0xProto Nerd Font" }
