@@ -80,3 +80,16 @@ function subdir() {
     git pull origin $BRANCH_NAME
     echo "Downloaded $SUBFOLDER_PATH from $REPO_URL on branch $BRANCH_NAME into $FOLDER_NAME/"
 }
+
+convert_to_h265() {
+    if [ $# -lt 2 ]; then
+        echo "Usage: convert_to_h265 input.mp4 output.mp4 [crf_value]"
+        return 1
+    fi
+
+    input_file="$1"
+    output_file="$2"
+    crf_value="${3:-28}"  # Default to CRF 28 if not provided
+
+    ffmpeg -i "$input_file" -vcodec libx265 -crf "$crf_value" "$output_file"
+}

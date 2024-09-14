@@ -86,3 +86,5 @@ eval "$(pyenv init -)"
 # Starship
 eval "$(starship init zsh)"
 eval "$(direnv hook zsh)"
+
+export PATH="/opt/homebrew/opt/libxslt/bin:$PATH"
