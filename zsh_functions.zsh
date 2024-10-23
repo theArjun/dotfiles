@@ -91,5 +91,14 @@ convert_to_h265() {
     output_file="$2"
     crf_value="${3:-28}"  # Default to CRF 28 if not provided
 
-    ffmpeg -i "$input_file" -vcodec libx265 -crf "$crf_value" "$output_file"
+    ffmpeg -i "$input_file" -vcodec libx265 -crf "$crf_value" -threads 0 "$output_file" 
 }
+
+function lpr() {
+    gh pr list --state merged --json mergedAt,author,title,number | 
+        jq -r '["PR Number", "Author", "Title", "Merged At"], 
+               ["---------", "------", "-----", "---------"], 
+               (.[] | [.number, .author.login, .title, .mergedAt]) | @tsv' | 
+        column -t -s $'\t'
+}
+
