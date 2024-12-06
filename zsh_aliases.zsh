@@ -23,6 +23,9 @@ alias djl="djlint --reformat --format-css"
 alias djd="django_doctor fix --address=0.0.0.0 --port=9001"
 alias pm="python manage.py"
 
+# Streamlit
+alias st="streamlit run"
+
 # Flutter
 alias frd="flutter run --flavor dev"
 alias fba="flutter build apk --flavor dev --debug"

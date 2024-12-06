@@ -62,3 +62,6 @@ unfocused_hollow = true
 
 [mouse]
 hide_when_typing = true
+
+[shell]
+program="/Users/arjun/workspace/misc/dotfiles/scripts/start_tmux.sh"
