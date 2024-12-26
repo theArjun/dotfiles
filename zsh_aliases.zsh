@@ -7,6 +7,7 @@ alias fdiff="git diff --name-only | grep .py | xargs flake8"
 alias rdiff="git diff --name-only | grep .py | xargs ruff format"
 alias upi="uv pip install"
 alias up="uv pip"
+alias rr="rye run"
 
 # Django Management Commands
 alias dj="python manage.py"
