@@ -11,7 +11,6 @@ ln -sf ${cwd}/tmux.conf ~/.tmux.conf
 ln -sf ${cwd}/zsh_aliases.zsh ~/.zsh_aliases.zsh
 ln -sf ${cwd}/zsh_functions.zsh ~/.zsh_functions.zsh
 ln -sf ${cwd}/git_aliases.zsh ~/.git_aliases.zsh
-ln -sf ${cwd}/powerline_theme.sh ~/.tmux/plugins/tmux-powerline/themes/custom.sh
 
 
 # Ensure ~/.config directory exists
@@ -25,6 +24,9 @@ ln -sf "${cwd}/config/alacritty/alacritty.toml" "$HOME/.config/alacritty/alacrit
 mkdir -p "$HOME/.config/lazygit"
 ln -sf "${cwd}/config/lazygit/config.yml" "$HOME/.config/lazygit/config.yml"
 
+# Symlink starship config
+ln -sf "${cwd}/config/starship.toml" "$HOME/.config/starship.toml"
+
 # Symlink scripts directory
 mkdir -p "$HOME/.config/scripts"
 ln -sf "${cwd}/*.sh" "$HOME/.config/scripts"
@@ -37,8 +39,3 @@ fi
 # Symlink Neovim and Tmuxinator configurations
 ln -sf "${parent_dir}/my-nvim-config" "$HOME/.config/nvim"
 ln -sf "${cwd}/tmuxinator" "$HOME/.config/tmuxinator"
-
-# Add custom segments to tmux-powerline
-mkdir -p "$HOME/.config/tmux-powerline/segments"
-ln -sf "${cwd}/scripts/nepali_date.sh" "$HOME/.config/tmux-powerline/segments/"
-ln -sf "${cwd}/scripts/nepse.sh" "$HOME/.config/tmux-powerline/segments/"
