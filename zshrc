@@ -16,6 +16,7 @@ export PATH="/opt/homebrew/opt/openjdk/bin:$PATH"
 export PATH="$HOME/.rbenv/bin:$PATH"
 export PATH="$HOME/tools/flutter/bin:$PATH"
 export PATH="$HOME/.local/bin:$PATH"
+export PATH="$HOME/.atuin/bin:$PATH"
 
 # For compilers to find openjdk you may need to set:
 export CPPFLAGS="-I/opt/homebrew/opt/openjdk/include"
@@ -88,3 +89,7 @@ eval "$(starship init zsh)"
 eval "$(direnv hook zsh)"
 
 export PATH="/opt/homebrew/opt/libxslt/bin:$PATH"
+
+. "$HOME/.atuin/bin/env"
+
+eval "$(atuin init zsh)"

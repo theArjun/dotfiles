@@ -45,6 +45,7 @@ alias pgrestore="pg_restore -U postgres"
 alias gfh="git-file-history"
 alias lg="lazygit"
 alias cleanbr='git branch --merged | grep -v "\*" | xargs -n 1 git branch -d'
+alias cbr='git checkout -b'
 
 # Java
 alias gjf="java -jar ~/tools/gjf.jar --replace"
