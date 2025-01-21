@@ -27,11 +27,19 @@ alias pm="python manage.py"
 # Streamlit
 alias st="streamlit run"
 
+# Direnv
+alias de="direnv edit ."
+alias da="direnv allow ."
+alias dr="direnv reload"
+
 # Flutter
 alias frd="flutter run --flavor dev"
 alias fba="flutter build apk --flavor dev --debug"
 alias fcl="flutter clean"
 alias fpcl="flutter pub cache clean"
+
+# Typescript
+alias formatts="npx @biomejs/biome format --write ./src"
 
 # Postgres
 alias pgstart="brew services start postgresql"
