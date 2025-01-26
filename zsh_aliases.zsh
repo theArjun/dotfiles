@@ -77,7 +77,7 @@ alias dcrestart="docker-compose restart"  # Added alias
 alias dcupb="docker-compose up --build"  # Added alias
 
 # YT
-alias ytmp="youtube-dl --extract-audio --audio-format mp3"
+alias ytmp="yt-dlp --extract-audio --audio-format mp3"
 alias ytpl='yt-dlp --ignore-errors --format bestaudio --extract-audio --embed-metadata --embed-thumbnail --add-metadata --audio-format mp3 --audio-quality 160K --output "%(title)s.%(ext)s"'
 
 # File System
