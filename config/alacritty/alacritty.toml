@@ -23,6 +23,16 @@ bindings = [
   { key = "Minus", mods = "Control|Shift", action = "DecreaseFontSize" },
 ]
 
+[cursor]
+style = "Block"
+unfocused_hollow = true
+
+[mouse]
+hide_when_typing = true
+
+[shell]
+program="/Users/arjun/workspace/misc/dotfiles/scripts/start_tmux.sh"
+
 [colors]
 [colors.primary]
 background = "#1E1E2E"
@@ -56,12 +66,4 @@ cursor = "#D9E0EE"
 text = "#1E1E2E"
 background = "#D9E0EE"
 
-[cursor]
-style = "Block"
-unfocused_hollow = true
 
-[mouse]
-hide_when_typing = true
-
-[shell]
-program="/Users/arjun/workspace/misc/dotfiles/scripts/start_tmux.sh"
