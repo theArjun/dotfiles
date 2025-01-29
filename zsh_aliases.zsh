@@ -81,7 +81,6 @@ alias ytmp="yt-dlp --extract-audio --audio-format mp3"
 alias ytpl='yt-dlp --ignore-errors --format bestaudio --extract-audio --embed-metadata --embed-thumbnail --add-metadata --audio-format mp3 --audio-quality 160K --output "%(title)s.%(ext)s"'
 
 # File System
-alias ls="eza --icons --sort type"
 alias ll="ls -la"
 alias .1="cd .."
 alias .2="cd ../.."
