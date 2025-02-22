@@ -17,9 +17,15 @@ export PATH="$HOME/.rbenv/bin:$PATH"
 export PATH="$HOME/tools/flutter/bin:$PATH"
 export PATH="$HOME/.local/bin:$PATH"
 export PATH="$HOME/.atuin/bin:$PATH"
+export PATH="/opt/homebrew/opt/postgresql@16/bin:$PATH"
+export PATH="/opt/homebrew/opt/libxslt/bin:$PATH"
+export PATH="/opt/homebrew/opt/libpq/bin:$PATH"
 
 # For compilers to find openjdk you may need to set:
 export CPPFLAGS="-I/opt/homebrew/opt/openjdk/include"
+export LDFLAGS="-L/opt/homebrew/opt/postgresql@16/lib"
+export CPPFLAGS="-I/opt/homebrew/opt/postgresql@16/include"
+
 
 # command for zsh-completions
 source ~/.zsh_plugins/zsh-autocomplete/zsh-autocomplete.plugin.zsh
@@ -84,12 +90,13 @@ export PYENV_ROOT="$HOME/.pyenv"
 [[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
 eval "$(pyenv init -)"
 
+. "$HOME/.atuin/bin/env"
+
+eval "$(atuin init zsh)"
+
+
 # Starship
 eval "$(starship init zsh)"
 eval "$(direnv hook zsh)"
 
-export PATH="/opt/homebrew/opt/libxslt/bin:$PATH"
 
-. "$HOME/.atuin/bin/env"
-
-eval "$(atuin init zsh)"
