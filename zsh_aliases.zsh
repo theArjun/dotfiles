@@ -41,14 +41,6 @@ alias fpcl="flutter pub cache clean"
 # Typescript
 alias formatts="npx @biomejs/biome format --write ./src"
 
-# Postgres
-alias pgstart="brew services start postgresql"
-alias pgstop="brew services stop postgresql"
-alias pgrestart="brew services restart postgresql"
-alias pgcli="psql -U postgres"
-alias pgdump="pg_dump -U postgres"
-alias pgrestore="pg_restore -U postgres"
-
 # Git Aliases
 alias gfh="git-file-history"
 alias lg="lazygit"
@@ -95,6 +87,8 @@ alias eda="nvim ~/.zsh_aliases.zsh"
 alias so="source ~/.zshrc"
 alias ng="ngrok http --domain=previously-choice-puma.ngrok-free.app"
 alias nv="fd --type f --hidden --exclude .git | fzf-tmux -p | xargs nvim"
+alias vi="nvim"
+alias vim="nvim"
 alias myip="ifconfig en0 | grep inet | grep -v inet6 | cut -d ' ' -f2"
 
 # Tmux
@@ -108,7 +102,3 @@ alias tso="tmux source-file ~/.tmux.conf"
 alias tks="tmux kill-server"
 alias tn="tmux new -s"  # Added alias
 alias tr="tmux rename-session"  # Added alias
-
-# System Monitoring and Management
-alias topcpu="ps aux --sort=-%cpu | head"  # Added alias
-alias topmem="ps aux --sort=-%mem | head"  # Added alias

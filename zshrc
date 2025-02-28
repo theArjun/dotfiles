@@ -85,11 +85,6 @@ export FZF_ALT_C_COMMAND='rg --files --no-ignore --hidden --follow --glob "!.git
 export LC_ALL=en_US.UTF-8
 export LANG=en_US.UTF-8
 
-# Pyenv
-export PYENV_ROOT="$HOME/.pyenv"
-[[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
-eval "$(pyenv init -)"
-
 . "$HOME/.atuin/bin/env"
 
 eval "$(atuin init zsh)"
