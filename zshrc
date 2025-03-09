@@ -20,6 +20,8 @@ export PATH="$HOME/.atuin/bin:$PATH"
 export PATH="/opt/homebrew/opt/postgresql@16/bin:$PATH"
 export PATH="/opt/homebrew/opt/libxslt/bin:$PATH"
 export PATH="/opt/homebrew/opt/libpq/bin:$PATH"
+export GOPATH="$HOME/go"
+export PATH="$GOPATH/bin:$PATH"
 
 # For compilers to find openjdk you may need to set:
 export CPPFLAGS="-I/opt/homebrew/opt/openjdk/include"
@@ -80,6 +82,9 @@ export FZF_DEFAULT_OPTS='
 export FZF_DEFAULT_COMMAND='rg --files --no-ignore --hidden --follow --glob "!.git" 2>/dev/null'
 # Use ripgrep for fuzzy searching within files
 export FZF_ALT_C_COMMAND='rg --files --no-ignore --hidden --follow --glob "!.git" 2>/dev/null'
+
+# Rust
+export RUST_BACKTRACE=1
 
 # Pipenv
 export LC_ALL=en_US.UTF-8
