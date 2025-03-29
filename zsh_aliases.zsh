@@ -8,6 +8,18 @@ alias rdiff="git diff --name-only | grep .py | xargs ruff format"
 alias upi="uv pip install"
 alias up="uv pip"
 alias rr="rye run"
+# Added Python aliases
+alias pyf="python -m black ."
+alias pyi="python -m isort ."
+alias pylf="python -m flake8"
+alias pyr="python -m ruff check ."
+alias pyrc="python -m ruff check --fix ."
+alias pyd="python -m pydoc"
+alias pyprof="python -m cProfile -o profile.pstats"
+alias pyprofsort="python -c 'import pstats; p=pstats.Stats(\"profile.pstats\"); p.sort_stats(\"cumulative\").print_stats(50)'"
+alias venv="python -m venv .venv"
+alias pipout="pip list --outdated"
+alias pipreq="pip freeze > requirements.txt"
 
 # Django Management Commands
 alias dj="python manage.py"
@@ -40,12 +52,40 @@ alias fpcl="flutter pub cache clean"
 
 # Typescript
 alias formatts="npx @biomejs/biome format --write ./src"
+# Added Typescript/JavaScript aliases
+alias eslf="npx eslint --fix ."
+alias prtf="npx prettier --write ."
+alias nrd="npm run dev"
+alias nrs="npm run start"
+alias nrb="npm run build"
+alias nrt="npm run test"
+alias yrn="yarn"
+alias yrd="yarn dev"
+alias yrs="yarn start"
+alias yrb="yarn build"
+alias yrt="yarn test"
+alias pni="pnpm install"
+alias pnd="pnpm dev"
+alias pns="pnpm start"
+alias pnb="pnpm build"
+alias pnt="pnpm test"
 
 # Git Aliases
 alias gfh="git-file-history"
 alias lg="lazygit"
 alias cleanbr='git branch --merged | grep -v "\*" | xargs -n 1 git branch -d'
 alias cbr='git checkout -b'
+# Added git workflow aliases
+alias gpr="gh pr create"
+alias gprl="gh pr list"
+alias gprv="gh pr view"
+alias gprc="gh pr checkout"
+alias gis="git status --short"
+alias gll="git log --oneline -10"
+alias gwta="git worktree add"
+alias gwtl="git worktree list"
+alias gwtr="git worktree remove"
+alias gspr="git stash && git pull --rebase && git stash pop"
 
 # Java
 alias gjf="java -jar ~/tools/gjf.jar --replace"
@@ -67,6 +107,27 @@ alias dcvprune="docker volume prune"
 alias dcvpruneall="docker volume prune -f"
 alias dcrestart="docker-compose restart"  # Added alias
 alias dcupb="docker-compose up --build"  # Added alias
+
+# Kubernetes Aliases
+alias k="kubectl"
+alias kg="kubectl get"
+alias kgp="kubectl get pods"
+alias kgs="kubectl get services"
+alias kgd="kubectl get deployments"
+alias kga="kubectl get all"
+alias kd="kubectl describe"
+alias kdp="kubectl describe pod"
+alias kds="kubectl describe service"
+alias kdd="kubectl describe deployment"
+alias kl="kubectl logs"
+alias klf="kubectl logs -f"
+alias kaf="kubectl apply -f"
+alias kdf="kubectl delete -f"
+alias kc="kubectl config"
+alias kcc="kubectl config current-context"
+alias kcg="kubectl config get-contexts"
+alias kcs="kubectl config set-context"
+alias kcn="kubectl config set-context --current --namespace"
 
 # YT
 alias ytmp="yt-dlp --extract-audio --audio-format mp3"
@@ -104,3 +165,28 @@ alias tso="tmux source-file ~/.tmux.conf"
 alias tks="tmux kill-server"
 alias tn="tmux new -s"  # Added alias
 alias tr="tmux rename-session"  # Added alias
+
+# Development Tools
+alias http="python -m http.server"
+alias jsb="json_pp <"
+alias ccat="pygmentize -g"
+alias cip="curl -s ipinfo.io | jq"
+alias wip="curl -s wttr.in"
+alias cls="clear"
+alias path="echo $PATH | tr ':' '\n'"
+alias ports="sudo lsof -iTCP -sTCP:LISTEN -P"
+alias myports="sudo lsof -iTCP -sTCP:LISTEN -P | grep -i $USER"
+alias diskspace="df -h"
+alias foldersize="du -sh"
+alias biggest="du -sh * | sort -hr | head -10"
+alias mem="free -h"
+alias cpuinfo="lscpu"
+alias timestamp="date +%s"
+alias isodate="date -u +\"%Y-%m-%dT%H:%M:%SZ\""
+alias histg="history | grep"
+
+# Project navigation
+alias cdp="cd ~/projects"
+alias cdw="cd ~/workspace"
+alias cdd="cd ~/Downloads"
+alias cdt="cd /tmp"
