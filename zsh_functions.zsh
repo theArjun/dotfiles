@@ -42,10 +42,6 @@ function gitignore {
   curl -sLw "\n" https://toptal.com/developers/gitignore/api/$ignore_type > .gitignore
 }
 
-function pyinstall {
-    pyenv install -l | fzf --header="Select Python version to install" | xargs -I {} pyenv install {}
-}
-
 function checkv() {
     local package_name="$1"
     local latest_version=$(http GET "https://pypi.org/pypi/${package_name}/json" | jq -r '.info.version')
