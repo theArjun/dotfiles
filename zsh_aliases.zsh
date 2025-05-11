@@ -7,7 +7,11 @@ alias fdiff="git diff --name-only | grep .py | xargs flake8"
 alias rdiff="git diff --name-only | grep .py | xargs ruff format"
 alias upi="uv pip install"
 alias up="uv pip"
-alias rr="rye run"
+alias urf="uvx ruff format ."
+alias urc="uvx ruff check ."
+alias urcf="uvx ruff check --fix ."
+alias urcfu="uvx ruff check --fix --unsafe-fixes ."
+
 # Added Python aliases
 alias pyf="python -m black ."
 alias pyi="python -m isort ."
