@@ -13,7 +13,6 @@ export PATH="$HOME/executables:$PATH"
 export PATH="$HOME/Library/Android/sdk/emulator:$PATH"
 export PATH="$HOME/.cargo/bin:$PATH"
 export PATH="/opt/homebrew/opt/openjdk/bin:$PATH"
-export PATH="$HOME/.rbenv/bin:$PATH"
 export PATH="$HOME/tools/flutter/bin:$PATH"
 export PATH="$HOME/.local/bin:$PATH"
 export PATH="$HOME/.atuin/bin:$PATH"
@@ -86,7 +85,6 @@ export RUST_BACKTRACE=1
 # Pipenv
 export LC_ALL=en_US.UTF-8
 export LANG=en_US.UTF-8
-
 
 
 # Atuin
