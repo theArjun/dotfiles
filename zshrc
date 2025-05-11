@@ -87,11 +87,7 @@ export RUST_BACKTRACE=1
 export LC_ALL=en_US.UTF-8
 export LANG=en_US.UTF-8
 
-# The following lines have been added by Docker Desktop to enable Docker CLI completions.
-fpath="$HOME/.docker/completions $fpath"
-autoload -Uz compinit
-compinit
-# End of Docker CLI completions
+
 
 # Atuin
 . "$HOME/.atuin/bin/env"
@@ -101,4 +97,8 @@ eval "$(atuin init zsh)"
 eval "$(starship init zsh)"
 eval "$(direnv hook zsh)"
 
-
+# The following lines have been added by Docker Desktop to enable Docker CLI completions.
+fpath="$HOME/.docker/completions $fpath"
+autoload -Uz compinit
+compinit
+# End of Docker CLI completions
