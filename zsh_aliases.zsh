@@ -79,6 +79,8 @@ alias gfh="git-file-history"
 alias lg="lazygit"
 alias cleanbr='git branch --merged | grep -v "\*" | xargs -n 1 git branch -d'
 alias cbr='git checkout -b'
+alias glol='git log --graph --pretty="%Cred%h%Creset -%C(auto)%d%Creset %s %Cgreen(%ar) %C(bold blue)<%an>%Creset"'
+
 # Added git workflow aliases
 alias gpr="gh pr create"
 alias gprl="gh pr list"
@@ -90,7 +92,6 @@ alias gwta="git worktree add"
 alias gwtl="git worktree list"
 alias gwtr="git worktree remove"
 alias gspr="git stash && git pull --rebase && git stash pop"
-alias glol='git log --graph --pretty="%Cred%h%Creset -%C(auto)%d%Creset %s %Cgreen(%ar) %C(bold blue)<%an>%Creset"'
 
 # Java
 alias gjf="java -jar ~/tools/gjf.jar --replace"
@@ -112,27 +113,6 @@ alias dcvprune="docker volume prune"
 alias dcvpruneall="docker volume prune -f"
 alias dcrestart="docker-compose restart"  # Added alias
 alias dcupb="docker-compose up --build"  # Added alias
-
-# Kubernetes Aliases
-alias k="kubectl"
-alias kg="kubectl get"
-alias kgp="kubectl get pods"
-alias kgs="kubectl get services"
-alias kgd="kubectl get deployments"
-alias kga="kubectl get all"
-alias kd="kubectl describe"
-alias kdp="kubectl describe pod"
-alias kds="kubectl describe service"
-alias kdd="kubectl describe deployment"
-alias kl="kubectl logs"
-alias klf="kubectl logs -f"
-alias kaf="kubectl apply -f"
-alias kdf="kubectl delete -f"
-alias kc="kubectl config"
-alias kcc="kubectl config current-context"
-alias kcg="kubectl config get-contexts"
-alias kcs="kubectl config set-context"
-alias kcn="kubectl config set-context --current --namespace"
 
 # YT
 alias ytmp="yt-dlp --extract-audio --audio-format mp3"
@@ -158,6 +138,7 @@ alias nv="nvim ."
 alias vi="nvim"
 alias vim="nvim"
 alias myip="ifconfig en0 | grep inet | grep -v inet6 | cut -d ' ' -f2"
+alias ls="eza --icons --group-directories-first"
 
 # Tmux
 alias t="tmux"
