@@ -28,8 +28,6 @@ export LDFLAGS="-L/opt/homebrew/opt/postgresql@16/lib"
 export CPPFLAGS="-I/opt/homebrew/opt/postgresql@16/include"
 
 
-# command for zsh-completions
-source ~/.zsh_plugins/zsh-autocomplete/zsh-autocomplete.plugin.zsh
 # Aliases
 source ~/.zsh_aliases.zsh
 # Git aliases
@@ -97,6 +95,5 @@ eval "$(direnv hook zsh)"
 
 # The following lines have been added by Docker Desktop to enable Docker CLI completions.
 fpath="$HOME/.docker/completions $fpath"
-autoload -Uz compinit
-compinit
+compinit -u
 # End of Docker CLI completions
