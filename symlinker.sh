@@ -10,8 +10,6 @@ ln -sf ${cwd}/gitconfig ~/.gitconfig
 ln -sf ${cwd}/tmux.conf ~/.tmux.conf
 ln -sf ${cwd}/zsh_aliases.zsh ~/.zsh_aliases.zsh
 ln -sf ${cwd}/zsh_functions.zsh ~/.zsh_functions.zsh
-ln -sf ${cwd}/git_aliases.zsh ~/.git_aliases.zsh
-
 
 # Ensure ~/.config directory exists
 mkdir -p "$HOME/.config"

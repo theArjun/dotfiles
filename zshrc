@@ -30,8 +30,6 @@ export CPPFLAGS="-I/opt/homebrew/opt/postgresql@16/include"
 
 # Aliases
 source ~/.zsh_aliases.zsh
-# Git aliases
-source ~/.git_aliases.zsh
 # Functions
 source ~/.zsh_functions.zsh
 
@@ -41,6 +39,43 @@ export EDITOR="nvim"
 # Config
 setopt HIST_IGNORE_ALL_DUPS
 setopt HIST_IGNORE_SPACE
+
+# Load zsh modules needed for completion
+zmodload zsh/complist
+zmodload zsh/parameter
+zmodload zsh/zleparameter
+autoload -Uz compinit is-at-least add-zle-hook-widget zmathfunc
+
+# Only rebuild zcompdump once per day
+if [ $(date +'%j') != $(/usr/bin/stat -f '%Sm' -t '%j' ~/.zcompdump 2>/dev/null) ]; then
+  rm -f ~/.zcompdump*
+  compinit
+else
+  compinit -C
+fi
+
+# Set up fpath for completions
+fpath=("$HOME/.zsh_plugins/zsh-autocomplete" $fpath)
+fpath=("$HOME/.docker/completions" $fpath)
+
+# Source zsh-autocomplete after compinit ONLY if it exists
+if [ -d "$HOME/.zsh_plugins/zsh-autocomplete" ]; then
+  if [[ -z "$functions[compdef]" ]]; then
+    autoload -Uz compdef
+  fi
+  
+  # Ensure add-zle-hook-widget function is loaded
+  if [[ -z "$functions[add-zle-hook-widget]" ]]; then
+    autoload -Uz add-zle-hook-widget
+  fi
+  
+  # Ensure zmathfunc is loaded
+  if [[ -z "$functions[zmathfunc]" ]]; then
+    autoload -Uz zmathfunc
+  fi
+  
+  source "$HOME/.zsh_plugins/zsh-autocomplete/zsh-autocomplete.plugin.zsh"
+fi
 
 # Plugins
 plugins=(
@@ -92,8 +127,3 @@ eval "$(atuin init zsh)"
 # Starship
 eval "$(starship init zsh)"
 eval "$(direnv hook zsh)"
-
-# The following lines have been added by Docker Desktop to enable Docker CLI completions.
-fpath="$HOME/.docker/completions $fpath"
-compinit -u
-# End of Docker CLI completions

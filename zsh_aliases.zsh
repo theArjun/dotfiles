@@ -90,6 +90,7 @@ alias gwta="git worktree add"
 alias gwtl="git worktree list"
 alias gwtr="git worktree remove"
 alias gspr="git stash && git pull --rebase && git stash pop"
+alias glol='git log --graph --pretty="%Cred%h%Creset -%C(auto)%d%Creset %s %Cgreen(%ar) %C(bold blue)<%an>%Creset"'
 
 # Java
 alias gjf="java -jar ~/tools/gjf.jar --replace"
