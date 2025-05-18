@@ -46,6 +46,10 @@ zmodload zsh/parameter
 zmodload zsh/zleparameter
 autoload -Uz compinit is-at-least add-zle-hook-widget zmathfunc
 
+# Autoload additional zsh completion functions needed by zsh-autocomplete
+autoload -Uz _main_complete _complete _approximate
+autoload -Uz chpwd_recent_dirs chpwd_recent_filehandler
+
 # Only rebuild zcompdump once per day
 if [ $(date +'%j') != $(/usr/bin/stat -f '%Sm' -t '%j' ~/.zcompdump 2>/dev/null) ]; then
   rm -f ~/.zcompdump*
