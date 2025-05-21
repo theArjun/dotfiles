@@ -131,3 +131,4 @@ eval "$(atuin init zsh)"
 # Starship
 eval "$(starship init zsh)"
 eval "$(direnv hook zsh)"
+eval "$(zoxide init zsh)"
