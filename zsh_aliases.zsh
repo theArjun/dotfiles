@@ -138,7 +138,7 @@ alias nv="nvim ."
 alias vi="nvim"
 alias vim="nvim"
 alias myip="ifconfig en0 | grep inet | grep -v inet6 | cut -d ' ' -f2"
-alias ls="eza --icons --group-directories-first"
+alias els="eza --icons --group-directories-first"
 
 # Tmux
 alias t="tmux"
