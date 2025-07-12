@@ -1,5 +1,5 @@
 # Function as alias
-function pips { 
+function pips {
     pip install $1 && pip freeze | grep $1 >> requirements.txt
 }
 
@@ -35,7 +35,7 @@ function syncall {
 
 function br {
   git branch --sort=-committerdate | fzf --header "Checkout Recent Branch" --preview "git diff --color=always {1}" --pointer="" | xargs git checkout
-} 
+}
 
 function gitignore {
   read -p "Enter the ignore type: " ignore_type
@@ -87,15 +87,17 @@ convert_to_h265() {
     output_file="$2"
     crf_value="${3:-28}"  # Default to CRF 28 if not provided
 
-    ffmpeg -i "$input_file" -vcodec libx265 -crf "$crf_value" -threads 0 "$output_file" 
+    ffmpeg -i "$input_file" -vcodec libx265 -crf "$crf_value" -threads 0 "$output_file"
 }
 
 function lpr() {
-    gh pr list --state merged --json mergedAt,author,title,number | 
-        jq -r '["PR Number", "Author", "Title", "Merged At"], 
-               ["---------", "------", "-----", "---------"], 
-               (.[] | [.number, .author.login, .title, .mergedAt]) | @tsv' | 
+    gh pr list --state merged --json mergedAt,author,title,number |
+        jq -r '["PR Number", "Author", "Title", "Merged At"],
+               ["---------", "------", "-----", "---------"],
+               (.[] | [.number, .author.login, .title, .mergedAt]) | @tsv' |
         column -t -s $'\t'
 }
 
 function gi() { curl -sLw "\n" https://www.toptal.com/developers/gitignore/api/$@ ;}
+
+function sdir() { local dir dir=$(fd --type d --max-depth 5 --hidden --exclude .git | fzf --height 40% --layout reverse --border) && cd "$dir" ;}
