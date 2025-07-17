@@ -11,6 +11,10 @@ alias rf="ruff format ."
 alias rc="ruff check ."
 alias rcf="ruff check --fix ."
 alias rcfu="ruff check --fix --unsafe-fixes ."
+alias urf="uvx ruff format ."
+alias urc="uvx ruff check ."
+alias urcf="uvx ruff check --fix ."
+alias urcfu="uvx ruff check --fix --unsafe-fixes ."
 
 # Added Python aliases
 alias pyf="python -m black ."
