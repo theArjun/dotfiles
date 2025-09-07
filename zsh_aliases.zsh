@@ -15,6 +15,7 @@ alias urf="uvx ruff format ."
 alias urc="uvx ruff check ."
 alias urcf="uvx ruff check --fix ."
 alias urcfu="uvx ruff check --fix --unsafe-fixes ."
+alias urcs="uvx ruff check --statistics"
 
 # Added Python aliases
 alias pyf="python -m black ."
