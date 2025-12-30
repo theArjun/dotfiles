@@ -132,3 +132,5 @@ eval "$(atuin init zsh)"
 eval "$(starship init zsh)"
 eval "$(direnv hook zsh)"
 eval "$(zoxide init zsh)"
+# Added by Antigravity
+export PATH="/Users/arjun/.antigravity/antigravity/bin:$PATH"
