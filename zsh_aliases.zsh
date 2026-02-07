@@ -124,7 +124,10 @@ alias ytmp="yt-dlp --extract-audio --audio-format mp3"
 alias ytpl='yt-dlp --ignore-errors --format bestaudio --extract-audio --embed-metadata --embed-thumbnail --add-metadata --audio-format mp3 --audio-quality 160K --output "%(title)s.%(ext)s"'
 
 # File System
-alias ll="ls -la"
+alias ls='eza --icons --color=always --group-directories-first'
+alias ll='eza --icons --color=always --group-directories-first -l --git'
+alias la='eza --icons --color=always --group-directories-first -la --git'
+alias lt='eza --icons --color=always --tree --level=2'
 alias .1="cd .."
 alias .2="cd ../.."
 alias .3="cd ../../.."
@@ -143,7 +146,7 @@ alias nv="nvim ."
 alias vi="nvim"
 alias vim="nvim"
 alias myip="ifconfig en0 | grep inet | grep -v inet6 | cut -d ' ' -f2"
-alias els="eza --icons --group-directories-first"
+alias hide="chflags -R hidden"
 
 # Tmux
 alias t="tmux"
