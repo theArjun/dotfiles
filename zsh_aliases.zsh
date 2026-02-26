@@ -96,6 +96,7 @@ alias gll="git log --oneline -10"
 alias gwta="git worktree add"
 alias gwtl="git worktree list"
 alias gwtr="git worktree remove"
+alias gwtp="git worktree prune"
 alias gspr="git stash && git pull --rebase && git stash pop"
 
 # Java

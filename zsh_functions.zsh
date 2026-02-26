@@ -101,3 +101,46 @@ function lpr() {
 function gi() { curl -sLw "\n" https://www.toptal.com/developers/gitignore/api/$@ ;}
 
 function sdir() { local dir dir=$(fd --type d --max-depth 5 --hidden --exclude .git | fzf --height 40% --layout reverse --border) && cd "$dir" ;}
+
+# Git Worktree functions
+function wt() {
+  local selected
+  selected=$(git worktree list | fzf --height 40% --layout reverse --border \
+    --header "Switch Worktree" \
+    --preview 'git log --oneline -10 --color=always $(echo {} | awk "{print \$NF}" | tr -d "[]")' \
+  ) && cd "$(echo "$selected" | awk '{print $1}')"
+}
+
+function wta() {
+  local branch
+  branch=$(git branch -a --sort=-committerdate | sed 's/^[* ]*//' | sed 's|remotes/origin/||' | sort -u | \
+    fzf --height 40% --layout reverse --border \
+    --header "Add Worktree from Branch" \
+    --preview 'git log --oneline -10 --color=always {}' \
+  ) || return
+  local dir="../$(basename $(git rev-parse --show-toplevel))-$branch"
+  git worktree add "$dir" "$branch" && cd "$dir"
+}
+
+function wtn() {
+  if [ $# -eq 0 ]; then
+    echo "Usage: wtn <new-branch-name>"
+    return 1
+  fi
+  local branch="$1"
+  local dir="../$(basename $(git rev-parse --show-toplevel))-$branch"
+  git worktree add -b "$branch" "$dir" && cd "$dir"
+}
+
+function wtr() {
+  local selected
+  selected=$(git worktree list | tail -n +2 | \
+    fzf --height 40% --layout reverse --border \
+    --header "Remove Worktree" --multi \
+    --preview 'git log --oneline -10 --color=always $(echo {} | awk "{print \$NF}" | tr -d "[]")' \
+  ) || return
+  echo "$selected" | while read -r line; do
+    local path="$(echo "$line" | awk '{print $1}')"
+    git worktree remove "$path" && echo "Removed: $path"
+  done
+}
