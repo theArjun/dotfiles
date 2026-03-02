@@ -13,7 +13,7 @@
 	program = gpg
 [core]
 	autocrlf = input
-  editor = nvim
+	editor = vi
   pager = delta
   excludefile = ~/.gitignore
   quotepath = false

@@ -96,6 +96,7 @@ alias gll="git log --oneline -10"
 alias gwta="git worktree add"
 alias gwtl="git worktree list"
 alias gwtr="git worktree remove"
+alias gwtp="git worktree prune"
 alias gspr="git stash && git pull --rebase && git stash pop"
 
 # Java
@@ -124,10 +125,10 @@ alias ytmp="yt-dlp --extract-audio --audio-format mp3"
 alias ytpl='yt-dlp --ignore-errors --format bestaudio --extract-audio --embed-metadata --embed-thumbnail --add-metadata --audio-format mp3 --audio-quality 160K --output "%(title)s.%(ext)s"'
 
 # File System
-alias ls='eza --icons --color=always --group-directories-first'
-alias ll='eza --icons --color=always --group-directories-first -l --git'
-alias la='eza --icons --color=always --group-directories-first -la --git'
-alias lt='eza --icons --color=always --tree --level=2'
+alias ls='ls --color=always'
+alias ll='ls -lh --color=always'
+alias la='ls -lah --color=always'
+alias lt='ls -lRh --color=always'
 alias .1="cd .."
 alias .2="cd ../.."
 alias .3="cd ../../.."
