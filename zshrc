@@ -126,7 +126,10 @@ export LANG=en_US.UTF-8
 
 # Atuin
 . "$HOME/.atuin/bin/env"
-eval "$(atuin init zsh)"
+# Append a command directly (after sourcing zvm)
+zvm_after_init_commands+=(
+  'eval "$(atuin init zsh)"'
+)
 
 # Starship
 eval "$(starship init zsh)"
