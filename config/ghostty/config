@@ -13,9 +13,6 @@ cursor-style = block
 cursor-style-blink = false
 mouse-hide-while-typing = true
 
-# Shell
-command = $HOME/workspace/misc/dotfiles/scripts/start_tmux.sh
-
 # macOS
 macos-titlebar-style = hidden
 

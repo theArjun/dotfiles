@@ -12,7 +12,7 @@ size = 18
 
 [terminal]
 osc52 = "CopyPaste"
-shell = "/Users/arjun/workspace/misc/dotfiles/scripts/start_tmux.sh"
+shell = "~/.config/arjun-dotfiles/scripts/start_tmux.sh"
 
 [keyboard]
 bindings = [

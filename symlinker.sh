@@ -30,8 +30,8 @@ ln -sf "${cwd}/config/ghostty/config" "$HOME/Library/Application Support/com.mit
 ln -sf "${cwd}/config/starship.toml" "$HOME/.config/starship.toml"
 
 # Symlink scripts directory
-mkdir -p "$HOME/.config/scripts"
-ln -sf "${cwd}/*.sh" "$HOME/.config/scripts"
+mkdir -p "$HOME/.config/arjun-dotfiles"
+ln -sf "${cwd}/scripts" "$HOME/.config/arjun-dotfiles/scripts"
 
 # Symlink secrets directory if it exists
 if [ -d "$cwd/secrets" ]; then
