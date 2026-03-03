@@ -2,3 +2,24 @@ git:
   paging:
     colorArg: always
     pager: delta --dark --paging=never
+  commit:
+    preloadCommitMessage: true
+    autoWrap: true
+    autoWrapWidth: 100
+    commitPrefixes:
+      - pattern: ^feat
+        style: green
+      - pattern: ^fix
+        style: red
+      - pattern: ^docs
+        style: blue
+      - pattern: ^style
+        style: yellow
+      - pattern: ^refactor
+        style: cyan
+      - pattern: ^perf
+        style: magenta
+      - pattern: ^test
+        style: white
+      - pattern: ^chore
+        style: gray
