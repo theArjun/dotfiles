@@ -56,17 +56,16 @@ mux start soudan
 Includes: Editor, Server, Lazygit, Ngrok, Redis, Android Emulators
 
 ### easysheet.yml
-Multi-service development setup using pnpm.
+Multi-service development setup for EasySheet project.
 ```bash
 mux start easysheet
 ```
 
 Includes:
 - **editor**: Nvim in backend directory
-- **backend**: Backend dev server (`pnpm dev`)
+- **backend**: Backend dev server (`uvicorn app.main:easy_sheet --reload`)
 - **admin**: Admin panel dev server (`pnpm dev`)
-- **frontend**: Frontend dev server (`pnpm dev`)
-- **lazygit**: Git UI for version control
+- **frontend**: Frontend landing page dev server (`pnpm dev`)
 
 ## Creating a New Configuration
 
