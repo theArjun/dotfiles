@@ -22,6 +22,10 @@ ln -sf "${cwd}/config/alacritty/alacritty.toml" "$HOME/.config/alacritty/alacrit
 mkdir -p "$HOME/.config/lazygit"
 ln -sf "${cwd}/config/lazygit/config.yml" "$HOME/.config/lazygit/config.yml"
 
+# Symlink Ghostty config
+mkdir -p "$HOME/Library/Application Support/com.mitchellh.ghostty"
+ln -sf "${cwd}/config/ghostty/config" "$HOME/Library/Application Support/com.mitchellh.ghostty/config"
+
 # Symlink starship config
 ln -sf "${cwd}/config/starship.toml" "$HOME/.config/starship.toml"
 
