@@ -24,8 +24,8 @@ keybind = ctrl+shift+f=toggle_fullscreen
 keybind = ctrl+shift+c=copy_to_clipboard
 keybind = ctrl+shift+v=paste_from_clipboard
 keybind = ctrl+shift+t=new_window
-keybind = ctrl+shift+equal=increase_font_size
-keybind = ctrl+shift+minus=decrease_font_size
+keybind = ctrl+equal=increase_font_size:1
+keybind = ctrl+-=decrease_font_size:1
 
 # Colors (Catppuccin Mocha)
 background = 1e1e2e
@@ -47,6 +47,9 @@ palette = 12=#96CDFB
 palette = 13=#F5C2E7
 palette = 14=#89DCEB
 palette = 15=#D9E0EE
+
+cursor-color = d9e0ee
+cursor-text = 1e1e2e
 
 selection-background = d9e0ee
 selection-foreground = 1e1e2e
