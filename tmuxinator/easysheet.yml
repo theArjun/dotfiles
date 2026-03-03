@@ -11,7 +11,7 @@ windows:
   - backend:
       root: ~/workspace/wesionary/easysheet.git/develop
       panes:
-        - uvicorn easysheet.main:app --reload
+        - uvicorn app.main:easy_sheet --reload
   - admin:
       root: ~/workspace/wesionary/easysheet-admin
       panes:

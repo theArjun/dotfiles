@@ -1,3 +1,8 @@
+# Auto-start tmux
+if command -v tmux &>/dev/null && [ -z "$TMUX" ] && [[ $- == *i* ]] && [ -t 0 ]; then
+    tmux attach-session -t default 2>/dev/null || tmux new-session -s default
+fi
+
 export PATH="/opt/homebrew/bin:$PATH"
 export PATH="/opt/homebrew/sbin:$PATH"
 export PATH="/usr/local/bin:$PATH"
