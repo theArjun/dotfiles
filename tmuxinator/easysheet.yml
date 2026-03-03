@@ -4,7 +4,10 @@ root: ~/workspace/wesionary/
 startup_window: editor
 
 windows:
-  - editor: cd develop && nvim .
+  - editor:
+      root: ~/workspace/wesionary/easysheet.git/develop
+      panes:
+        - nvim .
   - backend:
       root: ~/workspace/wesionary/easysheet.git/develop
       panes:
