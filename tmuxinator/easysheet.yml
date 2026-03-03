@@ -17,4 +17,3 @@ windows:
       root: ~/workspace/wesionary/easysheet-lp
       panes:
         - pnpm dev
-  - lazygit: lazygit
