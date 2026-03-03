@@ -1,0 +1,20 @@
+name: easysheet
+root: ~/workspace/wesionary/
+
+startup_window: editor
+
+windows:
+  - editor: cd develop && nvim .
+  - backend:
+      root: ~/workspace/wesionary/easysheet.git/develop
+      panes:
+        - uvicorn easysheet.main:app --reload
+  - admin:
+      root: ~/workspace/wesionary/easysheet-admin
+      panes:
+        - pnpm dev
+  - frontend:
+      root: ~/workspace/wesionary/easysheet-lp
+      panes:
+        - pnpm dev
+  - lazygit: lazygit
