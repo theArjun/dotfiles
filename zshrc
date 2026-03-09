@@ -56,7 +56,7 @@ autoload -Uz _main_complete _complete _approximate
 autoload -Uz chpwd_recent_dirs chpwd_recent_filehandler
 
 # Only rebuild zcompdump once per day
-if [ $(date +'%j') != $(/usr/bin/stat -f '%Sm' -t '%j' ~/.zcompdump 2>/dev/null) ]; then
+if [ "$(date +%j)" != "$(/usr/bin/stat -f %Sm -t %j ~/.zcompdump 2>/dev/null)" ]; then
   rm -f ~/.zcompdump*
   compinit
 else
@@ -65,7 +65,21 @@ fi
 
 # Set up fpath for completions
 fpath=("$HOME/.zsh_plugins/zsh-autocomplete" $fpath)
+fpath=(/opt/homebrew/share/zsh/site-functions $fpath)
+fpath=(/opt/homebrew/share/zsh-completions $fpath)
 fpath=("$HOME/.docker/completions" $fpath)
+
+# Source zsh-syntax-highlighting (must be before autosuggestions)
+if [ -f /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]; then
+  source /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+fi
+
+# Source zsh-autosuggestions BEFORE Atuin to allow proper key binding override
+if [ -f /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh ]; then
+  source /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+  # Configure autosuggestions to work nicely with Atuin
+  export ZSH_AUTOSUGGEST_STRATEGY=(history completion atuin)
+fi
 
 # Source zsh-autocomplete after compinit ONLY if it exists
 if [ -d "$HOME/.zsh_plugins/zsh-autocomplete" ]; then
@@ -95,6 +109,17 @@ plugins=(
  virtualenv
  direnv
 )
+
+# SSH Completion - Parse ~/.ssh/config for hostname suggestions
+if [ -f ~/.ssh/config ]; then
+  _ssh_hosts=($(grep -E "^Host\s" ~/.ssh/config | grep -v "\*" | awk '{print $2}'))
+  if [[ -n $_ssh_hosts ]]; then
+    compdef _ssh_hosts_completion ssh scp sftp
+  fi
+  _ssh_hosts_completion() {
+    compadd "$@" "${_ssh_hosts[@]}"
+  }
+fi
 
 # There can be .secrets dir and envvars.zsh file in the .secrets dir.
 # If there is, source it.
