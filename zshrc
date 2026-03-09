@@ -110,6 +110,58 @@ plugins=(
  direnv
 )
 
+# AWS CLI Completion
+if command -v aws_completer &>/dev/null; then
+  complete -C "$(which aws_completer)" aws
+elif [ -f /opt/homebrew/bin/aws_completer ]; then
+  complete -C /opt/homebrew/bin/aws_completer aws
+elif [ -f ~/.local/bin/aws_completer ]; then
+  complete -C ~/.local/bin/aws_completer aws
+fi
+
+# UV (Python package manager) Completion
+if command -v uv &>/dev/null; then
+  eval "$(uv generate-shell-completion zsh)"
+fi
+
+# Python (pip) Completion
+if command -v register-python-argcomplete &>/dev/null; then
+  eval "$(register-python-argcomplete pip)"
+  eval "$(register-python-argcomplete pip3)"
+fi
+
+# Poetry Completion
+if command -v poetry &>/dev/null; then
+  fpath+=($HOME/.zfunc)
+  mkdir -p $HOME/.zfunc
+  poetry completions zsh > $HOME/.zfunc/_poetry 2>/dev/null
+fi
+
+# pipx Completion
+if command -v pipx &>/dev/null; then
+  eval "$(register-python-argcomplete pipx)"
+fi
+
+# npm Completion
+if command -v npm &>/dev/null; then
+  npm completion > /dev/null 2>&1
+fi
+
+# Cargo/Rust Completion
+if command -v cargo &>/dev/null; then
+  fpath+=($HOME/.cargo/completion)
+fi
+
+# Docker Completion (if not already in fpath)
+if command -v docker &>/dev/null; then
+  fpath+=(/opt/homebrew/share/docker/completion)
+fi
+
+# Git Completion (enhanced)
+if command -v git &>/dev/null; then
+  fpath+=(/opt/homebrew/share/zsh/site-functions)
+fi
+
 # SSH Completion - Parse ~/.ssh/config for hostname suggestions
 if [ -f ~/.ssh/config ]; then
   _ssh_hosts=($(grep -E "^Host\s" ~/.ssh/config | grep -v "\*" | awk '{print $2}'))
