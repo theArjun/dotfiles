@@ -144,3 +144,45 @@ function wtr() {
     git worktree remove "$path" && echo "Removed: $path"
   done
 }
+
+# ============================================================================
+# INTERACTIVE VISUAL FUNCTIONS - Terminal Interactivity Enhancements
+# ============================================================================
+
+# Show colorized system status with emoji indicators
+function status() {
+  echo ""
+  echo "╔═══════════════════════════════════════════╗"
+  echo "║        🖥️  SYSTEM STATUS DASHBOARD        ║"
+  echo "╚═══════════════════════════════════════════╝"
+  echo ""
+
+  # CPU usage
+  local cpu_usage=$(top -l1 | grep "CPU usage" | awk '{print $3}' | cut -d'%' -f1)
+  if (( ${cpu_usage%.*} > 70 )); then
+    echo "🔴 CPU Usage: ${cpu_usage}%"
+  elif (( ${cpu_usage%.*} > 40 )); then
+    echo "🟡 CPU Usage: ${cpu_usage}%"
+  else
+    echo "🟢 CPU Usage: ${cpu_usage}%"
+  fi
+
+  # Memory usage
+  local mem_usage=$(vm_stat | grep "Pages free" | awk '{print $3}' | cut -d'.' -f1)
+  echo "💾 Memory: $(free -h 2>/dev/null || vm_stat | head -2)"
+
+  # Disk usage
+  echo "💿 Disk Usage: $(df -h / | tail -1 | awk '{print $5 " used of " $2}')"
+
+  # Git status if in repo
+  if git rev-parse --git-dir > /dev/null 2>&1; then
+    local uncommitted=$(git status --porcelain | wc -l)
+    if [ $uncommitted -eq 0 ]; then
+      echo "✅ Git: Clean"
+    else
+      echo "⚠️  Git: $uncommitted uncommitted changes"
+    fi
+  fi
+
+  echo ""
+}
