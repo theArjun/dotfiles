@@ -110,7 +110,7 @@ plugins=(
  direnv
 )
 
-# AWS CLI Completion
+# AWS CLI Completion with descriptions
 if command -v aws_completer &>/dev/null; then
   complete -C "$(which aws_completer)" aws
 elif [ -f /opt/homebrew/bin/aws_completer ]; then
@@ -118,6 +118,11 @@ elif [ -f /opt/homebrew/bin/aws_completer ]; then
 elif [ -f ~/.local/bin/aws_completer ]; then
   complete -C ~/.local/bin/aws_completer aws
 fi
+
+# Enable completion descriptions (list-grouped-by-tags style)
+zstyle ':completion:*' format '%B%F{blue}--- %d ---%f%b'
+zstyle ':completion:*:descriptions' format '%B%F{green}%d%f%b'
+zstyle ':completion:*' group-name ''
 
 # UV (Python package manager) Completion
 if command -v uv &>/dev/null; then
@@ -161,6 +166,12 @@ fi
 if command -v git &>/dev/null; then
   fpath+=(/opt/homebrew/share/zsh/site-functions)
 fi
+
+# Completion styling with descriptions
+zstyle ':completion:*' list-grouped
+zstyle ':completion:*' list-colors '=(#b) #([0-9]#)*=36=31'
+zstyle ':completion:*:*:*:*:processes' command 'ps -u $USER -o pid,%cpu,cmd'
+zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=* l:|=*'
 
 # SSH Completion - Parse ~/.ssh/config for hostname suggestions
 if [ -f ~/.ssh/config ]; then
