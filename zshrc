@@ -147,11 +147,6 @@ if command -v pipx &>/dev/null; then
   eval "$(register-python-argcomplete pipx)"
 fi
 
-# npm Completion
-if command -v npm &>/dev/null; then
-  npm completion > /dev/null 2>&1
-fi
-
 # Cargo/Rust Completion
 if command -v cargo &>/dev/null; then
   fpath+=($HOME/.cargo/completion)
