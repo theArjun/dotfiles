@@ -189,9 +189,8 @@ Modern terminal emulator with improved performance.
 |---|---|
 | `Prefix + g` | LazyGit popup |
 | `Prefix + b` | Git branch switcher (fzf) |
-| `Prefix + p` | GitHub PR list/checkout (fzf) |
+| `Prefix + P` | GitHub PR list/checkout (fzf) |
 | `Prefix + t` | Tmux sessionizer |
-| `Prefix + u` | Floating terminal (floax) |
 
 ##### Misc
 

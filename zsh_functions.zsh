@@ -19,6 +19,13 @@ function pr {
   GH_FORCE_TTY=100% gh pr list | fzf --ansi --preview 'GH_FORCE_TTY=100% gh pr view {1}' --header-lines 3 | awk '{print $1}' | xargs gh pr checkout
 }
 
+function ghi {
+  local selected
+  selected=$(GH_FORCE_TTY=100% gh issue list | fzf --ansi --preview 'GH_FORCE_TTY=100% gh issue view {1}' --header-lines 3) || return
+  local number=$(echo "$selected" | awk '{print $1}')
+  gh issue develop "$number" --checkout
+}
+
 function syncall {
   echo "Syncing config..."
   # Store current datetime in a variable and host name too
