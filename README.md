@@ -190,6 +190,7 @@ Modern terminal emulator with improved performance.
 | `Prefix + g` | LazyGit popup |
 | `Prefix + b` | Git branch switcher (fzf) |
 | `Prefix + P` | GitHub PR list/checkout (fzf) |
+| `Prefix + I` | GitHub issue list + create branch (fzf) |
 | `Prefix + t` | Tmux sessionizer |
 
 ##### Misc
