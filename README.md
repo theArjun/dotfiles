@@ -163,6 +163,44 @@ Modern terminal emulator with improved performance.
 - Pane management
 - Status bar customization
 
+#### Tmux Shortcuts
+
+> Prefix is `Ctrl+Space`
+
+##### Panes
+
+| Shortcut | Action |
+|---|---|
+| `Prefix + \|` | Split pane horizontally |
+| `Prefix + -` | Split pane vertically |
+| `Ctrl+h/j/k/l` | Navigate panes (vim-aware) |
+| `Prefix + h/j/k/l` | Resize pane |
+
+##### Windows
+
+| Shortcut | Action |
+|---|---|
+| `Prefix + c` | New window |
+| `Prefix + R` | Renumber windows |
+
+##### Sessions & Popups
+
+| Shortcut | Action |
+|---|---|
+| `Prefix + g` | LazyGit popup |
+| `Prefix + b` | Git branch switcher (fzf) |
+| `Prefix + p` | GitHub PR list/checkout (fzf) |
+| `Prefix + t` | Tmux sessionizer |
+| `Prefix + u` | Floating terminal (floax) |
+
+##### Misc
+
+| Shortcut | Action |
+|---|---|
+| `Prefix + r` | Reload tmux config |
+| `Prefix + v` (copy mode) | Begin selection |
+| `Prefix + y` (copy mode) | Copy to clipboard |
+
 **tmuxinator/** - Pre-configured project session templates:
 - `soudan.yml` - Backend development setup
 - Additional project configs can be added
