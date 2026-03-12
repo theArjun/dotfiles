@@ -55,19 +55,19 @@ autoload -Uz compinit is-at-least add-zle-hook-widget zmathfunc
 autoload -Uz _main_complete _complete _approximate
 autoload -Uz chpwd_recent_dirs chpwd_recent_filehandler
 
-# Only rebuild zcompdump once per day
-if [ "$(date +%j)" != "$(/usr/bin/stat -f %Sm -t %j ~/.zcompdump 2>/dev/null)" ]; then
-  rm -f ~/.zcompdump*
-  compinit
-else
-  compinit -C
-fi
-
-# Set up fpath for completions
+# Set up fpath for completions (must be before compinit)
 fpath=("$HOME/.zsh_plugins/zsh-autocomplete" $fpath)
 fpath=(/opt/homebrew/share/zsh/site-functions $fpath)
 fpath=(/opt/homebrew/share/zsh-completions $fpath)
 fpath=("$HOME/.docker/completions" $fpath)
+
+# Only rebuild zcompdump once per day
+if [ "$(date +%j)" != "$(/usr/bin/stat -f %Sm -t %j ~/.zcompdump 2>/dev/null)" ]; then
+  rm -f ~/.zcompdump*(N)
+  compinit -i
+else
+  compinit -i -C
+fi
 
 # Source zsh-syntax-highlighting (must be before autosuggestions)
 if [ -f /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]; then
@@ -145,11 +145,6 @@ fi
 # pipx Completion
 if command -v pipx &>/dev/null; then
   eval "$(register-python-argcomplete pipx)"
-fi
-
-# npm Completion
-if command -v npm &>/dev/null; then
-  npm completion > /dev/null 2>&1
 fi
 
 # Cargo/Rust Completion
