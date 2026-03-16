@@ -15,16 +15,92 @@ function pyclear {
   find . -type d -name '__pycache__' -exec rm -rf {} +
 }
 
-function pr {
-  GH_FORCE_TTY=100% gh pr list | fzf --ansi --preview 'GH_FORCE_TTY=100% gh pr view {1}' --header-lines 3 | awk '{print $1}' | xargs gh pr checkout
+function _need_cmd() {
+  command -v "$1" >/dev/null 2>&1 || {
+    echo "Missing command: $1"
+    return 1
+  }
 }
 
-function ghi {
-  local selected
-  selected=$(GH_FORCE_TTY=100% gh issue list | fzf --ansi --preview 'GH_FORCE_TTY=100% gh issue view {1}' --header-lines 3) || return
-  local number=$(echo "$selected" | awk '{print $1}')
-  gh issue develop "$number" --checkout
+function ghpr() {
+  _need_cmd gh || return 1
+  _need_cmd fzf || return 1
+
+  local selected number
+  selected=$(
+    gh pr list --limit 100 --json number,title,headRefName,author,reviewDecision \
+      --template '{{range .}}{{printf "#%v\t%s\t%s\t%s\t%s\n" .number .title .headRefName .author.login .reviewDecision}}{{end}}' |
+      fzf --ansi --height 70% --layout reverse --border \
+        --header 'Checkout PR' \
+        --preview 'GH_FORCE_TTY=100% gh pr view {1}'
+  ) || return
+
+  number=$(echo "$selected" | awk '{print $1}' | tr -d '#')
+  [ -n "$number" ] && gh pr checkout "$number"
 }
+
+function ghprmine() {
+  _need_cmd gh || return 1
+  _need_cmd fzf || return 1
+
+  local selected number
+  selected=$(
+    gh pr list --author "@me" --limit 100 --json number,title,headRefName \
+      --template '{{range .}}{{printf "#%v\t%s\t%s\n" .number .title .headRefName}}{{end}}' |
+      fzf --height 70% --layout reverse --border \
+        --header 'My PRs' \
+        --preview 'GH_FORCE_TTY=100% gh pr view {1}'
+  ) || return
+
+  number=$(echo "$selected" | awk '{print $1}' | tr -d '#')
+  [ -n "$number" ] && gh pr checkout "$number"
+}
+
+function ghreview() {
+  _need_cmd gh || return 1
+  _need_cmd fzf || return 1
+
+  local selected number
+  selected=$(
+    gh pr list --search "review-requested:@me state:open" --limit 100 --json number,title,author,headRefName \
+      --template '{{range .}}{{printf "#%v\t%s\t%s\t%s\n" .number .title .author.login .headRefName}}{{end}}' |
+      fzf --height 70% --layout reverse --border \
+        --header 'PRs needing my review' \
+        --preview 'GH_FORCE_TTY=100% gh pr view {1}'
+  ) || return
+
+  number=$(echo "$selected" | awk '{print $1}' | tr -d '#')
+  [ -n "$number" ] && gh pr checkout "$number"
+}
+
+function ghissue() {
+  _need_cmd gh || return 1
+  _need_cmd fzf || return 1
+
+  local selected number
+  selected=$(
+    gh issue list --limit 200 --json number,title,state \
+      --template '{{range .}}{{printf "#%v\t%s\t%s\n" .number .title .state}}{{end}}' |
+      fzf --height 70% --layout reverse --border \
+        --header 'Issue -> develop branch' \
+        --preview 'GH_FORCE_TTY=100% gh issue view {1}'
+  ) || return
+
+  number=$(echo "$selected" | awk '{print $1}' | tr -d '#')
+  [ -n "$number" ] && gh issue develop "$number" --checkout
+}
+
+function ghdash() {
+  _need_cmd gh || return 1
+  echo "Repo: $(gh repo view --json nameWithOwner -q .nameWithOwner)"
+  echo "My open PRs: $(gh pr list --author @me --state open --json number --jq 'length')"
+  echo "Review requested: $(gh pr list --search "review-requested:@me state:open" --json number --jq 'length')"
+  echo "Assigned issues: $(gh issue list --assignee @me --state open --json number --jq 'length')"
+}
+
+function pr { ghpr "$@"; }
+
+function ghi { ghissue "$@"; }
 
 function syncall {
   echo "Syncing config..."
