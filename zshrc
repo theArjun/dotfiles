@@ -100,6 +100,21 @@ if [ -d "$HOME/.zsh_plugins/zsh-autocomplete" ]; then
   source "$HOME/.zsh_plugins/zsh-autocomplete/zsh-autocomplete.plugin.zsh"
 fi
 
+# History substring search keeps Up/Down focused on the current command prefix.
+if [ -f /opt/homebrew/share/zsh-history-substring-search/zsh-history-substring-search.zsh ]; then
+  source /opt/homebrew/share/zsh-history-substring-search/zsh-history-substring-search.zsh
+  bindkey '^[[A' history-substring-search-up
+  bindkey '^[[B' history-substring-search-down
+  bindkey '^[OA' history-substring-search-up
+  bindkey '^[OB' history-substring-search-down
+fi
+
+# Remind when a shorter alias exists for a command typed manually.
+if [ -f /opt/homebrew/share/zsh-you-should-use/you-should-use.plugin.zsh ]; then
+  export YSU_MESSAGE_POSITION="after"
+  source /opt/homebrew/share/zsh-you-should-use/you-should-use.plugin.zsh
+fi
+
 # Plugins
 plugins=(
  git
@@ -189,6 +204,14 @@ fi
 
 
 # FZF
+# Enable fzf key bindings and completion if installed.
+if [ -f /opt/homebrew/opt/fzf/shell/key-bindings.zsh ]; then
+  source /opt/homebrew/opt/fzf/shell/key-bindings.zsh
+fi
+if [ -f /opt/homebrew/opt/fzf/shell/completion.zsh ]; then
+  source /opt/homebrew/opt/fzf/shell/completion.zsh
+fi
+
 # Enable preview window with bat (syntax highlighting)
 export FZF_PREVIEW_COMMAND='[[ $(file --mime {}) =~ binary ]] && echo {} || bat --style=numbers,changes --color=always {} 2> /dev/null | sed "s/\[[0-9;]*m//g"'
 # FZF options
