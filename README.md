@@ -158,10 +158,12 @@ Modern terminal emulator with improved performance.
 ### Tmux Configuration
 
 **tmux.conf** - Tmux session and window management:
-- Customized keybindings
-- Window navigation shortcuts
-- Pane management
-- Status bar customization
+- Low-latency key handling and deep scrollback
+- Vim-aware pane navigation
+- Fast pane/window/session movement
+- Popup-driven git workflows
+- Automatic session restore with Continuum/Resurrect
+- Catppuccin status bar with current branch context
 
 #### Tmux Shortcuts
 
@@ -175,31 +177,50 @@ Modern terminal emulator with improved performance.
 | `Prefix + -` | Split pane vertically |
 | `Ctrl+h/j/k/l` | Navigate panes (vim-aware) |
 | `Prefix + h/j/k/l` | Resize pane |
+| `Prefix + H/J/K/L` | Swap pane position |
+| `Prefix + z` | Toggle pane zoom |
+| `Prefix + m` | Toggle synchronized panes |
+| `Prefix + Tab` | Jump to last pane |
+| `Prefix + Space` | Cycle pane layouts |
 
 ##### Windows
 
 | Shortcut | Action |
 |---|---|
 | `Prefix + c` | New window |
+| `Prefix + n / p` | Next / previous window |
+| `Prefix + Enter` | Jump to last window |
+| `Prefix + w` | Window tree / chooser |
+| `Prefix + ,` | Rename window |
 | `Prefix + R` | Renumber windows |
 
 ##### Sessions & Popups
 
 | Shortcut | Action |
 |---|---|
+| `Prefix + s` | Session tree / chooser |
+| `Prefix + S` | Rename session |
 | `Prefix + g` | LazyGit popup |
 | `Prefix + b` | Git branch switcher (fzf) |
 | `Prefix + P` | GitHub PR list/checkout (fzf) |
 | `Prefix + I` | GitHub issue list + create branch (fzf) |
-| `Prefix + t` | Tmux sessionizer |
+| `Prefix + t` | `tmux-sessionx` popup for sessions, windows, zoxide, tmuxinator |
 
 ##### Misc
 
 | Shortcut | Action |
 |---|---|
 | `Prefix + r` | Reload tmux config |
-| `Prefix + v` (copy mode) | Begin selection |
-| `Prefix + y` (copy mode) | Copy to clipboard |
+| `v` (copy mode) | Begin selection |
+| `y` (copy mode) | Copy to clipboard |
+
+#### Tmux Productivity Defaults
+
+- `escape-time` set to `0` for snappier prefix and Vim transitions
+- `history-limit` increased to `100000` for long terminal scrollback
+- `focus-events` enabled so modern terminals/editors react correctly
+- Windows renumber automatically after close
+- Pane/session state auto-saves every 15 minutes and restores on restart
 
 **tmuxinator/** - Pre-configured project session templates:
 - `soudan.yml` - Backend development setup
@@ -276,12 +297,6 @@ Auto-starts tmux when opening a new terminal session:
 - Only runs in interactive shells
 
 **Usage**: Automatically invoked via `zshrc` on shell startup
-
-### tmux_sessionizer.sh
-Interactive tmux session creator and navigator:
-- Create new tmux sessions from directories
-- Quick navigation between sessions
-- Integrated with fzf for selection
 
 ### nepali_date.sh
 Display current date in Nepali calendar format.
