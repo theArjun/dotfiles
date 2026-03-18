@@ -204,7 +204,6 @@ Modern terminal emulator with improved performance.
 | `Prefix + b` | Git branch switcher (fzf) |
 | `Prefix + P` | GitHub PR list/checkout (fzf) |
 | `Prefix + I` | GitHub issue list + create branch (fzf) |
-| `Prefix + t` | `tmux-sessionx` popup for sessions, windows, zoxide, tmuxinator |
 
 ##### Misc
 
