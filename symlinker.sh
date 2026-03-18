@@ -4,44 +4,55 @@
 cwd=$(pwd)
 parent_dir=$(dirname "$cwd")
 
-ln -sf ${cwd}/zshrc ~/.zshrc
-ln -sf ${cwd}/ideavimrc ~/.ideavimrc
-ln -sf ${cwd}/gitconfig ~/.gitconfig
-ln -sf ${cwd}/tmux.conf ~/.tmux.conf
-ln -sf ${cwd}/zsh_aliases.zsh ~/.zsh_aliases.zsh
-ln -sf ${cwd}/zsh_functions.zsh ~/.zsh_functions.zsh
+link() {
+    ln -sf "$1" "$2"
+    echo "  $1 -> $2"
+}
+
+echo "Symlinking dotfiles..."
+
+link "${cwd}/zshrc" ~/.zshrc
+link "${cwd}/ideavimrc" ~/.ideavimrc
+link "${cwd}/gitconfig" ~/.gitconfig
+link "${cwd}/tmux.conf" ~/.tmux.conf
+link "${cwd}/zsh_aliases.zsh" ~/.zsh_aliases.zsh
+link "${cwd}/zsh_functions.zsh" ~/.zsh_functions.zsh
 
 # Ensure ~/.config directory exists
 mkdir -p "$HOME/.config"
 
+echo "Symlinking configs..."
+
 # Symlink Alacritty config
 mkdir -p "$HOME/.config/alacritty"
-ln -sf "${cwd}/config/alacritty/alacritty.toml" "$HOME/.config/alacritty/alacritty.toml"
+link "${cwd}/config/alacritty/alacritty.toml" "$HOME/.config/alacritty/alacritty.toml"
 
 # Symlink Lazygit config
 mkdir -p "$HOME/.config/lazygit"
-ln -sf "${cwd}/config/lazygit/config.yml" "$HOME/.config/lazygit/config.yml"
+link "${cwd}/config/lazygit/config.yml" "$HOME/.config/lazygit/config.yml"
 
 # Symlink Ghostty config
 mkdir -p "$HOME/Library/Application Support/com.mitchellh.ghostty"
-ln -sf "${cwd}/config/ghostty/config" "$HOME/Library/Application Support/com.mitchellh.ghostty/config"
+link "${cwd}/config/ghostty/config" "$HOME/Library/Application Support/com.mitchellh.ghostty/config"
 
 # Symlink gh-dash config
 mkdir -p "$HOME/.config/gh-dash"
-ln -sf "${cwd}/config/gh-dash/config.yml" "$HOME/.config/gh-dash/config.yml"
+link "${cwd}/config/gh-dash/config.yml" "$HOME/.config/gh-dash/config.yml"
 
 # Symlink starship config
-ln -sf "${cwd}/config/starship.toml" "$HOME/.config/starship.toml"
+link "${cwd}/config/starship.toml" "$HOME/.config/starship.toml"
 
 # Symlink scripts directory
 mkdir -p "$HOME/.config/arjun-dotfiles"
-ln -sf "${cwd}/scripts" "$HOME/.config/arjun-dotfiles/scripts"
+link "${cwd}/scripts" "$HOME/.config/arjun-dotfiles/scripts"
 
 # Symlink secrets directory if it exists
 if [ -d "$cwd/secrets" ]; then
-    ln -sf "${cwd}/secrets" "$HOME/.secrets"
+    link "${cwd}/secrets" "$HOME/.secrets"
 fi
 
 # Symlink Neovim and Tmuxinator configurations
-ln -sf "${parent_dir}/my-nvim-config" "$HOME/.config/nvim"
-ln -sf "${cwd}/tmuxinator" "$HOME/.config/tmuxinator"
+link "${parent_dir}/my-nvim-config" "$HOME/.config/nvim"
+link "${cwd}/tmuxinator" "$HOME/.config/tmuxinator"
+
+echo "Done!"

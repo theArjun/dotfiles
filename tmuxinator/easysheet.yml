@@ -20,3 +20,10 @@ windows:
       root: ~/workspace/wesionary/easysheet-lp
       panes:
         - pnpm dev
+  - github-dashboard:
+      panes:
+        - gh dash
+  - lazygit:
+      root: ~/workspace/wesionary/easysheet
+      panes:
+        - lazygit

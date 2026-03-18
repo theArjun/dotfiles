@@ -1,17 +1,17 @@
 prSections:
 - title: My Pull Requests
-  filters: is:open author:@me
+  filters: is:open author:@me org:wesionaryTEAM
 - title: Needs My Review
-  filters: is:open review-requested:@me
+  filters: is:open review-requested:@me org:wesionaryTEAM
 - title: Involved
-  filters: is:open involves:@me -author:@me
+  filters: is:open involves:@me -author:@me org:wesionaryTEAM
 issuesSections:
 - title: My Issues
-  filters: is:open author:@me
+  filters: is:open author:@me org:wesionaryTEAM
 - title: Assigned
-  filters: is:open assignee:@me
+  filters: is:open assignee:@me org:wesionaryTEAM
 - title: Involved
-  filters: is:open involves:@me -author:@me
+  filters: is:open involves:@me -author:@me org:wesionaryTEAM
 defaults:
   preview:
     open: true
