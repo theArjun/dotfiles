@@ -5,11 +5,11 @@ startup_window: editor
 
 windows:
   - editor:
-      root: ~/workspace/wesionary/easysheet.git/develop
+      root: ~/workspace/wesionary/easysheet
       panes:
         - nvim .
   - backend:
-      root: ~/workspace/wesionary/easysheet.git/develop
+      root: ~/workspace/wesionary/easysheet
       panes:
         - uvicorn app.main:easy_sheet --reload
   - admin:
