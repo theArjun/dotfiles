@@ -256,6 +256,102 @@ See [tmuxinator/README.md](tmuxinator/README.md) for usage instructions.
 - Display preferences
 - Integration with git workflows
 
+#### Lazygit Shortcuts
+
+##### Global
+
+| Shortcut | Action |
+|---|---|
+| `?` | Open keybindings menu |
+| `q` | Quit |
+| `R` | Refresh git state |
+| `z` / `Z` | Undo / redo last git command |
+| `Ctrl+r` | Switch to recent repository |
+
+##### Files
+
+| Shortcut | Action |
+|---|---|
+| `Space` | Stage / unstage file |
+| `Enter` | Stage individual hunks |
+| `c` | Commit staged changes |
+| `A` | Amend last commit |
+| `s` | Stash all changes |
+| `d` | View discard options |
+
+##### Branches
+
+| Shortcut | Action |
+|---|---|
+| `Space` | Checkout branch |
+| `n` | Create new branch |
+| `d` | Delete branch |
+| `r` | Rebase onto selected branch |
+| `M` | Merge into current branch |
+
+##### Commits
+
+| Shortcut | Action |
+|---|---|
+| `s` | Squash into commit below |
+| `f` | Fixup (squash without message) |
+| `r` | Reword commit message |
+| `d` | Drop commit |
+| `e` | Edit / start interactive rebase |
+| `p` | Pick (during rebase) |
+
+##### Stash
+
+| Shortcut | Action |
+|---|---|
+| `Space` | Apply stash entry |
+| `g` | Pop stash entry |
+| `d` | Drop stash entry |
+| `n` | Create branch from stash |
+
+### gh-dash
+
+**config/gh-dash/config.yml** - GitHub dashboard TUI:
+- PR and issue sections filtered to wesionaryTEAM org
+- Repo paths mapped to local workspace
+
+#### gh-dash Shortcuts
+
+##### Global
+
+| Shortcut | Action |
+|---|---|
+| `?` | Toggle help menu |
+| `/` | Focus search input |
+| `r` | Refresh current section |
+| `R` | Refresh all sections |
+| `s` | Switch between PRs and Issues view |
+| `q` | Quit |
+
+##### Navigation
+
+| Shortcut | Action |
+|---|---|
+| `j` / `k` | Move down / up |
+| `h` / `l` | Previous / next section |
+| `g` / `G` | Jump to first / last item |
+
+##### Selected PR
+
+| Shortcut | Action |
+|---|---|
+| `C` | Checkout PR locally |
+| `d` | View PR diff |
+| `c` | Add comment |
+| `e` | Show full description |
+| `v` | Approve PR |
+| `m` | Merge PR |
+| `u` | Update PR branch |
+| `W` | Mark draft as ready for review |
+| `a` / `A` | Assign / unassign users |
+| `x` / `X` | Close / reopen PR |
+| `w` | Watch PR checks |
+
 ## 🛠️ Custom Functions & Aliases
 
 ### Python Development
