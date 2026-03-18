@@ -26,6 +26,10 @@ ln -sf "${cwd}/config/lazygit/config.yml" "$HOME/.config/lazygit/config.yml"
 mkdir -p "$HOME/Library/Application Support/com.mitchellh.ghostty"
 ln -sf "${cwd}/config/ghostty/config" "$HOME/Library/Application Support/com.mitchellh.ghostty/config"
 
+# Symlink gh-dash config
+mkdir -p "$HOME/.config/gh-dash"
+ln -sf "${cwd}/config/gh-dash/config.yml" "$HOME/.config/gh-dash/config.yml"
+
 # Symlink starship config
 ln -sf "${cwd}/config/starship.toml" "$HOME/.config/starship.toml"
 
