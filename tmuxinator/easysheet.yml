@@ -12,14 +12,14 @@ windows:
       root: ~/workspace/wesionary/easysheet
       panes:
         - uvicorn app.main:easy_sheet --reload
-  - admin:
-      root: ~/workspace/wesionary/easysheet-admin
-      panes:
-        - pnpm dev
   - frontend:
       root: ~/workspace/wesionary/easysheet-lp
       panes:
-        - pnpm dev
+        - npm dev
+  - admin:
+      root: ~/workspace/wesionary/easysheet-admin
+      panes:
+        - npm dev
   - github-dashboard:
       panes:
         - gh dash
