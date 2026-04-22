@@ -15,11 +15,11 @@ windows:
   - frontend:
       root: ~/workspace/wesionary/easysheet-lp
       panes:
-        - npm dev
+        - npm run dev
   - admin:
       root: ~/workspace/wesionary/easysheet-admin
       panes:
-        - npm dev
+        - npm run dev
   - github-dashboard:
       panes:
         - gh dash
