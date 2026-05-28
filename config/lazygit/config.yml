@@ -23,3 +23,11 @@ git:
         style: white
       - pattern: ^chore
         style: gray
+gui:
+  showRandomTip: true
+  animateExplosion: true
+  scrollHeight: 2
+  scrollPastBottom: true
+  spinner:
+    frames: ['⠋','⠙','⠹','⠸','⠼','⠴','⠦','⠧','⠇','⠏']
+    rate: 80
