@@ -272,9 +272,11 @@ function status() {
     echo "🟢 CPU Usage: ${cpu_usage}%"
   fi
 
-  # Memory usage
-  local mem_usage=$(vm_stat | grep "Pages free" | awk '{print $3}' | cut -d'.' -f1)
-  echo "💾 Memory: $(free -h 2>/dev/null || vm_stat | head -2)"
+  # Memory usage (macOS: vm_stat reports 16KB pages on Apple Silicon, 4KB on Intel)
+  local page_size=$(vm_stat | awk -F'of ' '/page size of/ {print $2}' | awk '{print $1}')
+  local mem_free_mb=$(vm_stat | awk -v ps=$page_size '/Pages free/ {gsub("\\.","",$3); print int($3 * ps / 1048576)}')
+  local mem_active_mb=$(vm_stat | awk -v ps=$page_size '/Pages active/ {gsub("\\.","",$3); print int($3 * ps / 1048576)}')
+  echo "💾 Memory: ${mem_active_mb}MB active, ${mem_free_mb}MB free"
 
   # Disk usage
   echo "💿 Disk Usage: $(df -h / | tail -1 | awk '{print $5 " used of " $2}')"

@@ -22,10 +22,9 @@ path=(
   $path
 )
 
-# For compilers to find openjdk you may need to set:
-export CPPFLAGS="-I/opt/homebrew/opt/openjdk/include"
+# Compiler flags for openjdk + postgresql so native extensions build.
+export CPPFLAGS="-I/opt/homebrew/opt/openjdk/include -I/opt/homebrew/opt/postgresql@16/include"
 export LDFLAGS="-L/opt/homebrew/opt/postgresql@16/lib"
-export CPPFLAGS="-I/opt/homebrew/opt/postgresql@16/include"
 
 
 # Aliases
@@ -101,15 +100,6 @@ if [ -d "$HOME/.zsh_plugins/zsh-autocomplete" ]; then
   fi
   
   source "$HOME/.zsh_plugins/zsh-autocomplete/zsh-autocomplete.plugin.zsh"
-fi
-
-# History substring search keeps Up/Down focused on the current command prefix.
-if [ -f /opt/homebrew/share/zsh-history-substring-search/zsh-history-substring-search.zsh ]; then
-  source /opt/homebrew/share/zsh-history-substring-search/zsh-history-substring-search.zsh
-  bindkey '^[[A' history-substring-search-up
-  bindkey '^[[B' history-substring-search-down
-  bindkey '^[OA' history-substring-search-up
-  bindkey '^[OB' history-substring-search-down
 fi
 
 # Remind when a shorter alias exists for a command typed manually.
@@ -189,12 +179,12 @@ zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=* l:|=
 # SSH Completion - Parse ~/.ssh/config for hostname suggestions
 if [ -f ~/.ssh/config ]; then
   _ssh_hosts=($(grep -E "^Host\s" ~/.ssh/config | grep -v "\*" | awk '{print $2}'))
-  if [[ -n $_ssh_hosts ]]; then
-    compdef _ssh_hosts_completion ssh scp sftp
-  fi
   _ssh_hosts_completion() {
     compadd "$@" "${_ssh_hosts[@]}"
   }
+  if [[ -n $_ssh_hosts ]]; then
+    compdef _ssh_hosts_completion ssh scp sftp
+  fi
 fi
 
 # There can be .secrets dir and envvars.zsh file in the .secrets dir.

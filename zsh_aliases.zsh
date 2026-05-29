@@ -104,22 +104,22 @@ alias gspr="git stash && git pull --rebase && git stash pop"
 alias gjf="java -jar ~/tools/gjf.jar --replace"
 
 # Docker Aliases
-alias dc="docker-compose"
-alias dcb="docker-compose build"
-alias dcd="docker-compose down"
-alias dce="docker-compose exec"
-alias dcl="docker-compose logs"
-alias dcp="docker-compose ps"
-alias dcr="docker-compose run"
-alias dcs="docker-compose stop"
-alias dcu="docker-compose up"
-alias dcv="docker-compose volume"
+alias dc="docker compose"
+alias dcb="docker compose build"
+alias dcd="docker compose down"
+alias dce="docker compose exec"
+alias dcl="docker compose logs"
+alias dcp="docker compose ps"
+alias dcr="docker compose run"
+alias dcs="docker compose stop"
+alias dcu="docker compose up"
+alias dcv="docker compose volume"
 alias dcvls="docker volume ls"
 alias dcvrm="docker volume rm"
 alias dcvprune="docker volume prune"
 alias dcvpruneall="docker volume prune -f"
-alias dcrestart="docker-compose restart"  # Added alias
-alias dcupb="docker-compose up --build"  # Added alias
+alias dcrestart="docker compose restart"  # Added alias
+alias dcupb="docker compose up --build"  # Added alias
 
 # Docker base CLI
 alias dps="docker ps"
