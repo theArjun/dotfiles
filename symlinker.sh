@@ -55,4 +55,11 @@ fi
 link "${parent_dir}/my-nvim-config" "$HOME/.config/nvim"
 link "${cwd}/tmuxinator" "$HOME/.config/tmuxinator"
 
+# Clone fzf-tab plugin (raw clone, matches zsh-autocomplete pattern in zshrc)
+mkdir -p "$HOME/.zsh_plugins"
+if [ ! -d "$HOME/.zsh_plugins/fzf-tab" ]; then
+    echo "Cloning fzf-tab..."
+    git clone --depth=1 https://github.com/Aloxaf/fzf-tab "$HOME/.zsh_plugins/fzf-tab"
+fi
+
 echo "Done!"

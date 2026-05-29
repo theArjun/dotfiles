@@ -121,15 +121,25 @@ alias dcvpruneall="docker volume prune -f"
 alias dcrestart="docker-compose restart"  # Added alias
 alias dcupb="docker-compose up --build"  # Added alias
 
+# Docker base CLI
+alias dps="docker ps"
+alias dpsa="docker ps -a"
+alias dimg="docker images"
+alias dlog="docker logs -f"
+alias dexec="docker exec -it"
+alias dprune="docker system prune -af --volumes"
+alias dstop='docker stop $(docker ps -q)'
+
 # YT
 alias ytmp="yt-dlp --extract-audio --audio-format mp3"
 alias ytpl='yt-dlp --ignore-errors --format bestaudio --extract-audio --embed-metadata --embed-thumbnail --add-metadata --audio-format mp3 --audio-quality 160K --output "%(title)s.%(ext)s"'
 
-# File System
-alias ls='ls --color=always'
-alias ll='ls -lh --color=always'
-alias la='ls -lah --color=always'
-alias lt='ls -lRh --color=always'
+# File System (eza/bat; escape with \ls or \cat for native)
+alias ls='eza --group-directories-first --icons'
+alias ll='eza -lh --git --icons --group-directories-first'
+alias la='eza -lah --git --icons --group-directories-first'
+alias lt='eza --tree --level=2 --icons --git-ignore'
+alias cat='bat --paging=never'
 alias .1="cd .."
 alias .2="cd ../.."
 alias .3="cd ../../.."
@@ -142,9 +152,9 @@ alias ed="nvim ~/.zshrc"
 alias eda="nvim ~/.zsh_aliases.zsh"
 alias so="source ~/.zshrc"
 alias ng="ngrok http --domain=previously-choice-puma.ngrok-free.app"
-alias nv="fd --type f --hidden --exclude .git | fzf-tmux -p | xargs nvim"
 alias nvd="neovide ."
 alias nv="nvim ."
+alias nvf="fd --type f --hidden --exclude .git | fzf-tmux -p | xargs nvim"
 alias vi="nvim"
 alias vim="nvim"
 alias myip="ifconfig en0 | grep inet | grep -v inet6 | cut -d ' ' -f2"

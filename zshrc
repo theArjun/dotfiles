@@ -3,29 +3,24 @@ if command -v tmux &>/dev/null && [ -z "$TMUX" ] && [[ $- == *i* ]] && [ -t 0 ];
     tmux attach-session -t default 2>/dev/null || tmux new-session -s default
 fi
 
-export PATH="/opt/homebrew/bin:$PATH"
-export PATH="/opt/homebrew/sbin:$PATH"
-export PATH="/usr/local/bin:$PATH"
-export PATH="/System/Cryptexes/App/usr/bin:$PATH"
-export PATH="/usr/bin:$PATH"
-export PATH="/bin:$PATH"
-export PATH="/usr/sbin:$PATH"
-export PATH="/sbin:$PATH"
-export PATH="/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/local/bin:$PATH"
-export PATH="/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/bin:$PATH"
-export PATH="/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/appleinternal/bin:$PATH"
-export PATH="$HOME/executables:$PATH"
-export PATH="$HOME/Library/Android/sdk/emulator:$PATH"
-export PATH="$HOME/.cargo/bin:$PATH"
-export PATH="/opt/homebrew/opt/openjdk/bin:$PATH"
-export PATH="$HOME/tools/flutter/bin:$PATH"
-export PATH="$HOME/.local/bin:$PATH"
-export PATH="$HOME/.atuin/bin:$PATH"
-export PATH="/opt/homebrew/opt/postgresql@16/bin:$PATH"
-export PATH="/opt/homebrew/opt/libxslt/bin:$PATH"
-export PATH="/opt/homebrew/opt/libpq/bin:$PATH"
 export GOPATH="$HOME/go"
-export PATH="$GOPATH/bin:$PATH"
+typeset -U path PATH
+path=(
+  $HOME/executables
+  $HOME/.local/bin
+  $HOME/.cargo/bin
+  $HOME/.atuin/bin
+  $GOPATH/bin
+  $HOME/tools/flutter/bin
+  $HOME/Library/Android/sdk/emulator
+  /opt/homebrew/opt/openjdk/bin
+  /opt/homebrew/opt/postgresql@16/bin
+  /opt/homebrew/opt/libxslt/bin
+  /opt/homebrew/opt/libpq/bin
+  /opt/homebrew/bin
+  /opt/homebrew/sbin
+  $path
+)
 
 # For compilers to find openjdk you may need to set:
 export CPPFLAGS="-I/opt/homebrew/opt/openjdk/include"
@@ -67,6 +62,14 @@ if [ "$(date +%j)" != "$(/usr/bin/stat -f %Sm -t %j ~/.zcompdump 2>/dev/null)" ]
   compinit -i
 else
   compinit -i -C
+fi
+
+# fzf-tab: fuzzy completion menus (must be after compinit, before syntax-highlighting)
+if [ -f "$HOME/.zsh_plugins/fzf-tab/fzf-tab.plugin.zsh" ]; then
+  source "$HOME/.zsh_plugins/fzf-tab/fzf-tab.plugin.zsh"
+  zstyle ':fzf-tab:complete:cd:*' fzf-preview 'eza -1 --color=always $realpath 2>/dev/null'
+  zstyle ':fzf-tab:complete:(*-)file:*' fzf-preview 'bat --color=always --style=numbers --line-range=:200 $realpath 2>/dev/null'
+  zstyle ':fzf-tab:*' switch-group ',' '.'
 fi
 
 # Source zsh-syntax-highlighting (must be before autosuggestions)

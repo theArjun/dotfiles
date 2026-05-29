@@ -185,6 +185,28 @@ function gi() { curl -sLw "\n" https://www.toptal.com/developers/gitignore/api/$
 
 function sdir() { local dir dir=$(fd --type d --max-depth 5 --hidden --exclude .git | fzf --height 40% --layout reverse --border) && cd "$dir" ;}
 
+# Fuzzy-pick a running container and shell in (defaults to sh; pass bash etc.)
+function dsh() {
+  _need_cmd docker || return 1
+  _need_cmd fzf || return 1
+  local cid
+  cid=$(docker ps --format '{{.ID}}\t{{.Image}}\t{{.Names}}' \
+    | fzf --height 40% --layout reverse --border --header 'docker exec') \
+    || return
+  docker exec -it "$(echo "$cid" | awk '{print $1}')" "${@:-sh}"
+}
+
+# Fuzzy-pick a container and tail its logs
+function dlogs() {
+  _need_cmd docker || return 1
+  _need_cmd fzf || return 1
+  local cid
+  cid=$(docker ps --format '{{.ID}}\t{{.Image}}\t{{.Names}}' \
+    | fzf --height 40% --layout reverse --border --header 'docker logs -f') \
+    || return
+  docker logs -f "$(echo "$cid" | awk '{print $1}')"
+}
+
 # Git Worktree functions
 function wt() {
   local selected
