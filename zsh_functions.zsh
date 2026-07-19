@@ -293,3 +293,40 @@ function status() {
 
   echo ""
 }
+
+adb_wireless() {
+    # 1. Dynamically find the active local interface IP via the routing table
+    local LOCAL_IP
+    LOCAL_IP=$(route -n get 1.1.1.1 2>/dev/null | awk '/interface:/ {print $2}' | xargs ipconfig getifaddr)
+
+    # Fallback check if the Mac is completely offline or not on Wi-Fi
+    if [ -z "$LOCAL_IP" ]; then
+        echo "Error: No active network interface detected."
+        return 1
+    fi
+
+    # 2. Chop off the last octet to parse the base subnet profile (e.g., "192.168.18")
+    local SUBNET_BASE
+    SUBNET_BASE=$(echo "$LOCAL_IP" | cut -d'.' -f1-3)
+
+    echo "Detected active subnet: ${SUBNET_BASE}.X"
+    echo "---------------------------------------"
+
+    # 3. Prompt for the specific phone details
+    local LAST_DIGIT
+    local ADB_PORT
+    
+    # Zsh specific interactive input format
+    read "LAST_DIGIT?Enter the last digit of the phone's IP: "
+    read "ADB_PORT?Enter the ADB port: "
+
+    # 4. Synthesize the string properties
+    local PHONE_IP="${SUBNET_BASE}.${LAST_DIGIT}"
+
+    echo "---------------------------------------"
+    echo "Connecting to $PHONE_IP:$ADB_PORT..."
+    echo "---------------------------------------"
+
+    # 5. Establish the ADB connection link
+    adb connect "$PHONE_IP:$ADB_PORT"
+}
