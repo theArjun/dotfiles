@@ -14,17 +14,16 @@ path=(
   $HOME/tools/flutter/bin
   $HOME/Library/Android/sdk/emulator
   /opt/homebrew/opt/openjdk/bin
-  /opt/homebrew/opt/postgresql@16/bin
+  /opt/homebrew/opt/postgresql@18/bin
   /opt/homebrew/opt/libxslt/bin
-  /opt/homebrew/opt/libpq/bin
   /opt/homebrew/bin
   /opt/homebrew/sbin
   $path
 )
 
 # Compiler flags for openjdk + postgresql so native extensions build.
-export CPPFLAGS="-I/opt/homebrew/opt/openjdk/include -I/opt/homebrew/opt/postgresql@16/include"
-export LDFLAGS="-L/opt/homebrew/opt/postgresql@16/lib"
+export CPPFLAGS="-I/opt/homebrew/opt/openjdk/include -I/opt/homebrew/opt/postgresql@18/include"
+export LDFLAGS="-L/opt/homebrew/opt/postgresql@18/lib"
 
 
 # Aliases

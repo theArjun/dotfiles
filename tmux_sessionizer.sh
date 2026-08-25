@@ -3,7 +3,7 @@
 # Original Source
 # https://github.com/ThePrimeagen/.dotfiles/blob/master/bin/.local/scripts/tmux-sessionizer
 
-selected=$(find ~/workspace -mindepth 2 -maxdepth 2 -type d | fzf)
+selected=$(find "$HOME/workspace" -mindepth 2 -maxdepth 2 -type d | fzf)
 
 if [[ -z $selected ]]; then
   exit 0
