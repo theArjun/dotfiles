@@ -1,8 +1,3 @@
-# Auto-start tmux
-if command -v tmux &>/dev/null && [ -z "$TMUX" ] && [[ $- == *i* ]] && [ -t 0 ]; then
-    tmux attach-session -t default 2>/dev/null || tmux new-session -s default
-fi
-
 export GOPATH="$HOME/go"
 typeset -U path PATH
 path=(
