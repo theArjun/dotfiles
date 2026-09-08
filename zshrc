@@ -232,3 +232,6 @@ eval "$(direnv hook zsh)"
 eval "$(zoxide init zsh)"
 # Added by Antigravity
 export PATH="/Users/arjun/.antigravity/antigravity/bin:$PATH"
+
+# GPG commit signing
+export GPG_TTY=$(tty)

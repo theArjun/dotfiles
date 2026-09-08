@@ -39,6 +39,10 @@ link "${cwd}/config/ghostty/config" "$HOME/Library/Application Support/com.mitch
 mkdir -p "$HOME/.config/gh-dash"
 link "${cwd}/config/gh-dash/config.yml" "$HOME/.config/gh-dash/config.yml"
 
+# Symlink Herdr config (link the file only; the dir also holds sockets and logs)
+mkdir -p "$HOME/.config/herdr"
+link "${cwd}/config/herdr/config.toml" "$HOME/.config/herdr/config.toml"
+
 # Symlink starship config
 link "${cwd}/config/starship.toml" "$HOME/.config/starship.toml"
 

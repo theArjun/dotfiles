@@ -38,6 +38,7 @@ dotfiles/
 ├── config/
 │   ├── alacritty/          # Alacritty terminal emulator config
 │   ├── ghostty/            # Ghostty terminal emulator config
+│   ├── herdr/              # Herdr agent workspace manager config
 │   ├── lazygit/            # Lazygit git UI config
 │   └── starship.toml       # Starship prompt config
 ├── scripts/
@@ -86,6 +87,7 @@ This will set up:
 - `~/.zshrc` → Shell configuration
 - `~/.config/alacritty/alacritty.toml` → Alacritty config
 - `~/.config/lazygit/config.yml` → Lazygit config
+- `~/.config/herdr/config.toml` → Herdr config
 - `~Library/Application Support/com.mitchellh.ghostty/config` → Ghostty config
 - `~/.config/starship.toml` → Starship prompt config
 - `~/.config/tmuxinator/` → Tmuxinator templates

@@ -1,0 +1,14 @@
+onboarding = false
+
+[theme.custom]
+# Built-in catppuccin sets surface_dim to #1e1e2e, the same value as panel_bg,
+# so the sidebar/pane-area divider is painted in the background colour and
+# disappears. surface1 keeps it subtle but visible.
+surface_dim = "#45475a"
+
+# Optional UI tweaks — uncomment to taste.
+# [ui]
+# pane_borders = "always"              # frame a lone pane too, not just splits
+# hide_tab_bar_when_single_tab = true  # reclaim a row when a workspace has one tab
+# status_indicators = "symbols"        # glyphs instead of colour-only dots
+# sidebar_start_collapsed = false
