@@ -233,12 +233,67 @@ See [tmuxinator/README.md](tmuxinator/README.md) for usage instructions.
 **config/herdr/config.toml** - Herdr workspace manager. Keybindings are a 1:1
 port of `tmux.conf`, so the same keys do the same thing in both. Herdr actions
 with no tmux counterpart are disabled in the config, each one commented with its
-Herdr default so it can be restored by uncommenting.
+Herdr default so it can be restored by uncommenting. The sidebar toggle is the
+one exception, kept on a spare key because it has no tmux equivalent worth
+losing.
 
 > Prefix is `Ctrl+Space`, same as tmux. Herdr workspace = tmux session, Herdr tab = tmux window.
 
-Everything in the Tmux Shortcuts tables above works in Herdr, except these,
-which Herdr has no equivalent for:
+#### Herdr Shortcuts
+
+##### Panes
+
+| Shortcut | Action |
+|---|---|
+| `Prefix + \|` | Split pane horizontally |
+| `Prefix + -` | Split pane vertically |
+| `Ctrl+h/j/k/l` | Navigate panes |
+| `Prefix + h/j/k/l` | Resize pane |
+| `Prefix + H/J/K/L` | Swap pane position |
+| `Prefix + z` | Toggle pane zoom |
+| `Prefix + x` | Close pane |
+| `Prefix + Tab` or `Prefix + ;` | Jump to last pane |
+| `Prefix + o` | Cycle to next pane |
+
+##### Tabs (tmux windows)
+
+| Shortcut | Action |
+|---|---|
+| `Prefix + c` | New tab |
+| `Prefix + n / p` | Next / previous tab |
+| `Prefix + 1-9` | Switch to tab by number |
+| `Prefix + ,` | Rename tab |
+| `Prefix + &` | Close tab |
+
+##### Workspaces (tmux sessions)
+
+| Shortcut | Action |
+|---|---|
+| `Prefix + s` | Workspace picker |
+| `Prefix + w` | Go to tab across workspaces |
+| `Prefix + S` | Rename workspace |
+| `Prefix + ( / )` | Previous / next workspace |
+| `Prefix + t` | Fuzzy-find a project, focus or create its workspace |
+
+##### Popups
+
+| Shortcut | Action |
+|---|---|
+| `Prefix + g` | LazyGit popup |
+| `Prefix + b` | Git branch switcher (fzf) |
+| `Prefix + P` | GitHub PR list/checkout (fzf) |
+| `Prefix + I` | GitHub issue list + create branch (fzf) |
+
+##### Misc
+
+| Shortcut | Action |
+|---|---|
+| `Prefix + a` | Toggle the sidebar (workspaces + agents) |
+| `Prefix + ?` | Show all keybindings |
+| `Prefix + d` | Detach |
+| `Prefix + r` | Reload Herdr config |
+
+Bindings not carried over from `tmux.conf`, because Herdr has no equivalent:
 
 | Tmux shortcut | Action | Why it is unmapped |
 |---|---|---|
@@ -247,21 +302,14 @@ which Herdr has no equivalent for:
 | `Prefix + m` | Toggle synchronized panes | Herdr has no input broadcast |
 | `Prefix + R` | Renumber windows | Herdr renumbers tabs itself |
 
-Bindings taken from tmux's own defaults rather than `tmux.conf`:
+`Prefix + a` is the one binding with no tmux counterpart. Herdr puts the sidebar
+toggle on `Prefix + b` by default, which is already the branch-switcher popup
+here.
 
-| Shortcut | Action |
-|---|---|
-| `Prefix + d` | Detach |
-| `Prefix + x` | Close pane |
-| `Prefix + &` | Close tab |
-| `Prefix + o` | Cycle to next pane |
-| `Prefix + (` / `)` | Previous / next workspace |
-| `Prefix + 1-9` | Switch to tab by number |
-| `Prefix + ?` | Show all keybindings |
-
-Herdr actions disabled to keep the keymap identical to tmux: settings,
+Other Herdr actions are disabled to keep the keymap identical to tmux: settings,
 notification target, new/close workspace, worktree helpers, agent navigation,
-pane rename, scrollback editor, resize mode, and sidebar toggle.
+pane rename, scrollback editor, and resize mode. Each is one uncomment away in
+the config.
 
 Validate changes with `herdr config check`, then reload with `herdr server reload-config`.
 
