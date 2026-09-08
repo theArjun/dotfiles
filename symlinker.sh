@@ -5,7 +5,7 @@ cwd=$(pwd)
 parent_dir=$(dirname "$cwd")
 
 link() {
-    ln -sf "$1" "$2"
+    ln -sfn "$1" "$2"
     echo "  $1 -> $2"
 }
 
