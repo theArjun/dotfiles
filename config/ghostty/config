@@ -7,7 +7,11 @@ font-size = 18
 shell-integration = zsh
 
 # Window
-window-decoration = false
+# No `window-decoration = false` here. On macOS that maps to `none`, which makes
+# the window borderless, and a borderless window cannot enter native macOS
+# fullscreen -- ctrl+shift+f below silently does nothing. `macos-titlebar-style
+# = hidden` under macOS gives the same chromeless look on a real titled window,
+# which is what Ghostty's own docs recommend.
 window-padding-x = 5
 window-padding-y = 5
 
