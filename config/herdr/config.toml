@@ -12,3 +12,156 @@ surface_dim = "#45475a"
 # hide_tab_bar_when_single_tab = true  # reclaim a row when a workspace has one tab
 # status_indicators = "symbols"        # glyphs instead of colour-only dots
 # sidebar_start_collapsed = false
+
+# ─────────────────────────────────────────────────────────────────────────────
+# Keybindings — a 1:1 port of tmux.conf
+#
+# Every binding below is the key tmux uses for the same action, either from
+# tmux.conf in this repo or from tmux's own defaults. Herdr actions with no
+# tmux counterpart are disabled ("") so there is nothing extra to learn; each
+# one keeps its herdr default in a comment right above it, one uncomment away.
+#
+# Vocabulary: tmux session = herdr workspace, tmux window = herdr tab.
+#
+# tmux bindings with no herdr equivalent, left unmapped:
+#   prefix+Space  next-layout          herdr has no layout presets
+#   prefix+Enter  last-window          herdr has no "last tab" action
+#   prefix+m      synchronize-panes    herdr has no input broadcast
+#   prefix+R      move-window -r       herdr renumbers tabs itself
+# ─────────────────────────────────────────────────────────────────────────────
+
+[keys]
+prefix = "ctrl+space"                  # tmux: set -g prefix C-Space
+
+# — Session / server ————————————————————————————————————————————————
+help = "prefix+?"                      # tmux: ? list-keys
+detach = "prefix+d"                    # tmux: d detach-client
+reload_config = "prefix+r"             # tmux: r source-file ~/.tmux.conf
+# herdr-only, default "prefix+s":
+settings = ""
+# herdr-only, default "prefix+o":
+open_notification_target = ""
+
+# — Workspaces (tmux sessions) ——————————————————————————————————————
+workspace_picker = "prefix+s"          # tmux: s choose-tree -Zs
+goto = "prefix+w"                      # tmux: w choose-tree -Zw
+rename_workspace = "prefix+shift+s"    # tmux: S rename-session
+previous_workspace = "prefix+("        # tmux: ( switch-client -p
+next_workspace = "prefix+)"            # tmux: ) switch-client -n
+# herdr-only, defaults "prefix+shift+n" / "prefix+shift+d":
+# (prefix+t below fuzzy-finds a project and creates the workspace instead)
+new_workspace = ""
+close_workspace = ""
+switch_workspace = ""
+# herdr-only worktree helpers, default "prefix+shift+g" for new_worktree:
+new_worktree = ""
+open_worktree = ""
+remove_worktree = ""
+# herdr-only agent navigation:
+previous_agent = ""
+next_agent = ""
+focus_agent = ""
+
+# — Tabs (tmux windows) —————————————————————————————————————————————
+new_tab = "prefix+c"                   # tmux: c new-window
+rename_tab = "prefix+comma"            # tmux: , rename-window
+close_tab = "prefix+&"                 # tmux: & kill-window
+previous_tab = "prefix+p"              # tmux: p previous-window
+next_tab = "prefix+n"                  # tmux: n next-window
+switch_tab = "prefix+1..9"             # tmux: 1-9 select-window
+move_tab_previous = ""
+move_tab_next = ""
+
+# — Panes ———————————————————————————————————————————————————————————
+# tmux: C-h/j/k/l select-pane (vim-tmux-navigator, no prefix).
+# These are prefix-free, so herdr swallows them everywhere -- unlike tmux it
+# cannot hand them to a focused vim. Swap to prefix+h/j/k/l here (and move
+# resize_pane_* below elsewhere) if a pane app needs ctrl+h/j/k/l back.
+focus_pane_left = "ctrl+h"
+focus_pane_down = "ctrl+j"
+focus_pane_up = "ctrl+k"
+focus_pane_right = "ctrl+l"
+# tmux: h/j/k/l resize-pane
+resize_pane_left = "prefix+h"
+resize_pane_down = "prefix+j"
+resize_pane_up = "prefix+k"
+resize_pane_right = "prefix+l"
+split_vertical = "prefix+|"            # tmux: | split-window -h
+split_horizontal = "prefix+minus"      # tmux: - split-window -v
+close_pane = "prefix+x"                # tmux: x kill-pane
+zoom = "prefix+z"                      # tmux: z resize-pane -Z
+last_pane = ["prefix+tab", "prefix+;"] # tmux: Tab last-pane, ; last-pane
+cycle_pane_next = "prefix+o"           # tmux: o select-pane -t :.+
+cycle_pane_previous = ""
+# herdr-only, default "prefix+r" — prefix+r is reload, resize is on h/j/k/l:
+resize_mode = ""
+# herdr-only, default "prefix+shift+p" — prefix+P runs the PR popup below:
+rename_pane = ""
+# herdr-only, default "prefix+e":
+edit_scrollback = ""
+# herdr-only, default "prefix+b" — prefix+b runs the branch popup below, so the
+# sidebar (workspaces + agents) toggles on prefix+a instead. No tmux equivalent.
+toggle_sidebar = "prefix+a"
+
+# — Popups ——————————————————————————————————————————————————————————
+# tmux: g display-popup lazygit
+[[keys.command]]
+key = "prefix+g"
+type = "popup"
+command = "sh -c 'cd \"$HERDR_ACTIVE_PANE_CWD\" 2>/dev/null; exec lazygit'"
+width = "80%"
+height = "80%"
+
+# tmux: b display-popup br (git branch switcher)
+[[keys.command]]
+key = "prefix+b"
+type = "popup"
+command = "zsh -c 'cd \"$HERDR_ACTIVE_PANE_CWD\" 2>/dev/null; source $HOME/.zsh_functions.zsh; br'"
+width = "60%"
+height = "50%"
+
+# tmux: P display-popup pr (PR list/checkout)
+[[keys.command]]
+key = "prefix+shift+p"
+type = "popup"
+command = "zsh -c 'cd \"$HERDR_ACTIVE_PANE_CWD\" 2>/dev/null; source $HOME/.zsh_functions.zsh; pr'"
+width = "80%"
+height = "80%"
+
+# tmux: I display-popup ghi (issue list + branch creation)
+[[keys.command]]
+key = "prefix+shift+i"
+type = "popup"
+command = "zsh -c 'cd \"$HERDR_ACTIVE_PANE_CWD\" 2>/dev/null; source $HOME/.zsh_functions.zsh; ghi'"
+width = "80%"
+height = "80%"
+
+# tmux: t display-popup tmux_sessionizer.sh — same fuzzy project switcher,
+# creating/focusing a herdr workspace instead of a tmux session.
+[[keys.command]]
+key = "prefix+t"
+type = "popup"
+command = "sh -c '$HOME/.config/arjun-dotfiles/scripts/herdr_sessionizer.sh'"
+width = "80%"
+height = "80%"
+
+# tmux: H/J/K/L swap-pane
+[[keys.command]]
+key = "prefix+shift+h"
+type = "shell"
+command = "sh -c '\"${HERDR_BIN_PATH:-herdr}\" pane swap --pane \"$HERDR_ACTIVE_PANE_ID\" --direction left'"
+
+[[keys.command]]
+key = "prefix+shift+j"
+type = "shell"
+command = "sh -c '\"${HERDR_BIN_PATH:-herdr}\" pane swap --pane \"$HERDR_ACTIVE_PANE_ID\" --direction down'"
+
+[[keys.command]]
+key = "prefix+shift+k"
+type = "shell"
+command = "sh -c '\"${HERDR_BIN_PATH:-herdr}\" pane swap --pane \"$HERDR_ACTIVE_PANE_ID\" --direction up'"
+
+[[keys.command]]
+key = "prefix+shift+l"
+type = "shell"
+command = "sh -c '\"${HERDR_BIN_PATH:-herdr}\" pane swap --pane \"$HERDR_ACTIVE_PANE_ID\" --direction right'"

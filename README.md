@@ -42,6 +42,7 @@ dotfiles/
 │   ├── lazygit/            # Lazygit git UI config
 │   └── starship.toml       # Starship prompt config
 ├── scripts/
+│   ├── herdr_sessionizer.sh # Fuzzy-find a project, focus/create its Herdr workspace
 │   ├── tmux_sessionizer.sh # Create/navigate tmux sessions
 │   ├── nepali_date.sh      # Display current Nepali date
 │   └── nepse.sh            # Fetch Nepal Stock Exchange data
@@ -227,6 +228,43 @@ Modern terminal emulator with improved performance.
 
 See [tmuxinator/README.md](tmuxinator/README.md) for usage instructions.
 
+### Herdr Configuration
+
+**config/herdr/config.toml** - Herdr workspace manager. Keybindings are a 1:1
+port of `tmux.conf`, so the same keys do the same thing in both. Herdr actions
+with no tmux counterpart are disabled in the config, each one commented with its
+Herdr default so it can be restored by uncommenting.
+
+> Prefix is `Ctrl+Space`, same as tmux. Herdr workspace = tmux session, Herdr tab = tmux window.
+
+Everything in the Tmux Shortcuts tables above works in Herdr, except these,
+which Herdr has no equivalent for:
+
+| Tmux shortcut | Action | Why it is unmapped |
+|---|---|---|
+| `Prefix + Space` | Cycle pane layouts | Herdr has no layout presets |
+| `Prefix + Enter` | Jump to last window | Herdr has no last-tab action |
+| `Prefix + m` | Toggle synchronized panes | Herdr has no input broadcast |
+| `Prefix + R` | Renumber windows | Herdr renumbers tabs itself |
+
+Bindings taken from tmux's own defaults rather than `tmux.conf`:
+
+| Shortcut | Action |
+|---|---|
+| `Prefix + d` | Detach |
+| `Prefix + x` | Close pane |
+| `Prefix + &` | Close tab |
+| `Prefix + o` | Cycle to next pane |
+| `Prefix + (` / `)` | Previous / next workspace |
+| `Prefix + 1-9` | Switch to tab by number |
+| `Prefix + ?` | Show all keybindings |
+
+Herdr actions disabled to keep the keymap identical to tmux: settings,
+notification target, new/close workspace, worktree helpers, agent navigation,
+pane rename, scrollback editor, resize mode, and sidebar toggle.
+
+Validate changes with `herdr config check`, then reload with `herdr server reload-config`.
+
 ### Prompt (Starship)
 
 **config/starship.toml** - Fast, minimal, and infinitely customizable prompt:
@@ -384,6 +422,13 @@ Common git shortcuts defined in `gitconfig`:
 - And more...
 
 ## 📜 Scripts
+
+### herdr_sessionizer.sh
+Fuzzy-finds a project under `~/workspace` and focuses its Herdr workspace,
+creating the workspace when it does not exist yet. The Herdr counterpart of
+`tmux_sessionizer.sh`.
+
+**Usage**: `Prefix + t` inside Herdr
 
 ### nepali_date.sh
 Display current date in Nepali calendar format.
