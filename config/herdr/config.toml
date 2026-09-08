@@ -1,17 +1,76 @@
 onboarding = false
 
+# ─────────────────────────────────────────────────────────────────────────────
+# Theme — Catppuccin Mocha, the same palette as Ghostty, Alacritty and tmux.
+#
+# "catppuccin" is already herdr's default, but it is named here so the choice
+# survives a change of default. Everything under [theme.custom] layers on top
+# of it and stays inside the Mocha palette:
+#
+#   crust #11111b  mantle #181825  base #1e1e2e
+#   surface0 #313244  surface1 #45475a  surface2 #585b70
+#   overlay0 #6c7086  subtext0 #a6adc8  text #cdd6f4
+#   mauve #cba6f7  blue #89b4fa  teal #94e2d5  green #a6e3a1
+#   yellow #f9e2af  peach #fab387  red #f38ba8
+# ─────────────────────────────────────────────────────────────────────────────
+
+[theme]
+name = "catppuccin"
+
 [theme.custom]
+# Sidebar on mantle, panes on base. Two planes instead of one flat wall, and
+# the divider between them stops depending on a border character.
+sidebar_bg = "#181825"
+
+# Two distinct shades so "the space I am in" and "the row the cursor is on"
+# never read as the same thing in Navigate mode.
+active_row_bg = "#313244"      # active Space / focused Agent
+selection_bg = "#45475a"       # Navigate-mode cursor row
+
 # Built-in catppuccin sets surface_dim to #1e1e2e, the same value as panel_bg,
-# so the sidebar/pane-area divider is painted in the background colour and
-# disappears. surface1 keeps it subtle but visible.
+# so separators and scrollbar tracks are painted in the background colour and
+# disappear. surface1 keeps them subtle but visible.
 surface_dim = "#45475a"
 
-# Optional UI tweaks — uncomment to taste.
-# [ui]
-# pane_borders = "always"              # frame a lone pane too, not just splits
+# ─────────────────────────────────────────────────────────────────────────────
+# UI
+# ─────────────────────────────────────────────────────────────────────────────
+
+[ui]
+# herdr defaults to the literal ANSI "cyan", which is whatever the host
+# terminal decides. Pinning mauve keeps highlights, borders and the mode bars
+# on-palette everywhere. Swap for blue "#89b4fa" or teal "#94e2d5" to taste.
+accent = "#cba6f7"
+
+pane_borders = "always"                     # frame a lone pane too, not just splits
+show_agent_labels_on_pane_borders = true    # name the agent in the split border
+status_indicators = "symbols"               # glyphs, not colour-only dots
+
+# tmux-style status area at the right edge of the tab row.
+tab_bar_right = [
+  { type = "zoom" },
+  { type = "datetime", format = "%a %d %b  %H:%M" },
+]
+tab_bar_right_separator = " · "
+
+# Optional, uncomment to taste:
 # hide_tab_bar_when_single_tab = true  # reclaim a row when a workspace has one tab
-# status_indicators = "symbols"        # glyphs instead of colour-only dots
 # sidebar_start_collapsed = false
+# tab_bar_position = "bottom"          # tmux puts its status line at the bottom
+
+# Sidebar rows. Both default to an unstyled two-line layout; bolding the name
+# and dimming the git line gives each entry a clear first and second rank.
+[ui.sidebar.spaces]
+rows = [
+  ["state_icon", { token = "workspace", bold = true }],
+  [{ token = "branch", fg = "#a6adc8" }, "git_status"],
+]
+
+[ui.sidebar.agents]
+rows = [
+  ["state_icon", { token = "workspace", bold = true }, "tab"],
+  [{ token = "agent", fg = "#cba6f7" }],
+]
 
 # ─────────────────────────────────────────────────────────────────────────────
 # Keybindings — a 1:1 port of tmux.conf

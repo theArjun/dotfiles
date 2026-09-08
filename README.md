@@ -239,6 +239,30 @@ losing.
 
 > Prefix is `Ctrl+Space`, same as tmux. Herdr workspace = tmux session, Herdr tab = tmux window.
 
+#### Herdr Theme & UI
+
+Catppuccin Mocha, the same palette as Ghostty, Alacritty, and tmux. `catppuccin`
+is already Herdr's default theme, so the config names it explicitly and layers a
+few overrides on top:
+
+| Setting | Value | Why |
+|---|---|---|
+| `theme.custom.sidebar_bg` | `#181825` (mantle) | Puts the sidebar and the pane area on separate planes |
+| `theme.custom.active_row_bg` | `#313244` (surface0) | Marks the active Space / focused Agent |
+| `theme.custom.selection_bg` | `#45475a` (surface1) | Distinct shade for the Navigate-mode cursor row |
+| `theme.custom.surface_dim` | `#45475a` (surface1) | Built-in theme sets this to the panel background, hiding separators and scrollbar tracks |
+| `ui.accent` | `#cba6f7` (mauve) | Default is literal ANSI `cyan`, which the host terminal decides |
+
+UI tweaks on top of the defaults:
+
+| Setting | Value | Effect |
+|---|---|---|
+| `pane_borders` | `always` | Frames a lone pane, not just splits |
+| `show_agent_labels_on_pane_borders` | `true` | Names the agent in the split border |
+| `status_indicators` | `symbols` | Distinct glyphs instead of color-only dots |
+| `tab_bar_right` | zoom + clock | tmux-style status area at the right of the tab row |
+| `ui.sidebar.*.rows` | styled | Bold workspace name, dimmed branch line, mauve agent name |
+
 #### Herdr Shortcuts
 
 ##### Panes
