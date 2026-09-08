@@ -3,8 +3,7 @@ font-family = 0xProto Nerd Font
 font-size = 18
 
 # Shell
-# tmux is started here (and only here) -- other terminals get a plain shell.
-command = shell:~/.config/arjun-dotfiles/scripts/start_tmux.sh
+# Plain login shell -- tmux is never auto-started; run `tmux` when you want it.
 shell-integration = zsh
 
 # Window

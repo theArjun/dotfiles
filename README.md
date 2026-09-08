@@ -42,7 +42,6 @@ dotfiles/
 │   ├── lazygit/            # Lazygit git UI config
 │   └── starship.toml       # Starship prompt config
 ├── scripts/
-│   ├── start_tmux.sh       # Auto-start tmux on shell launch
 │   ├── tmux_sessionizer.sh # Create/navigate tmux sessions
 │   ├── nepali_date.sh      # Display current Nepali date
 │   └── nepse.sh            # Fetch Nepal Stock Exchange data
@@ -127,7 +126,6 @@ If you have sensitive environment variables:
 ### Shell Configuration (Zsh)
 
 **zshrc** - Main shell configuration file:
-- Auto-starts tmux on terminal launch
 - Sets up comprehensive PATH for all development tools
 - Sources aliases and functions
 - Configures shell history and completion
@@ -150,7 +148,7 @@ Modern terminal emulator with improved performance.
 - Features:
   - Font: 0xProto Nerd Font (18pt)
   - Catppuccin Mocha color scheme
-  - Auto-tmux startup
+  - Plain login shell (tmux is started manually)
   - Custom keybindings:
     - `Ctrl+Shift+F` - Toggle fullscreen
     - `Ctrl++` - Increase font size
@@ -386,14 +384,6 @@ Common git shortcuts defined in `gitconfig`:
 - And more...
 
 ## 📜 Scripts
-
-### start_tmux.sh
-Auto-starts tmux when opening a new terminal session:
-- Attaches to default session if it exists
-- Creates new default session if not
-- Only runs in interactive shells
-
-**Usage**: Automatically invoked via `zshrc` on shell startup
 
 ### nepali_date.sh
 Display current date in Nepali calendar format.
