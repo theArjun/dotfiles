@@ -46,6 +46,11 @@ pane_borders = "always"                     # frame a lone pane too, not just sp
 show_agent_labels_on_pane_borders = true    # name the agent in the split border
 status_indicators = "symbols"               # glyphs, not colour-only dots
 
+# Float blocked and needs-input agents to the top of the Agent panel instead of
+# grouping them by Space. With several worktrees in flight, the question you
+# have to answer is always the first row.
+agent_panel_sort = "priority"
+
 # tmux-style status area at the right edge of the tab row.
 tab_bar_right = [
   { type = "zoom" },
@@ -58,9 +63,19 @@ tab_bar_right_separator = " · "
 # sidebar_start_collapsed = false
 # tab_bar_position = "bottom"          # tmux puts its status line at the bottom
 
+# Agent notifications are off by default, which is the wrong default when the
+# agents run in workspaces you are not looking at. "terminal" hands the popup to
+# Ghostty, so it reaches the macOS notification centre and still works when
+# herdr is attached over SSH. Switch to "system" after `brew install
+# terminal-notifier` if you want clicking the notification to raise the terminal.
+[ui.toast]
+delivery = "terminal"
+delay_seconds = 3          # only notify if the agent is still in that state
+
 # Sidebar rows. Both default to an unstyled two-line layout; bolding the name
 # and dimming the git line gives each entry a clear first and second rank.
 [ui.sidebar.spaces]
+row_gap = 1                # one blank row between worktree groups
 rows = [
   ["state_icon", { token = "workspace", bold = true }],
   [{ token = "branch", fg = "#a6adc8" }, "git_status"],
@@ -69,24 +84,54 @@ rows = [
 [ui.sidebar.agents]
 rows = [
   ["state_icon", { token = "workspace", bold = true }, "tab"],
-  [{ token = "agent", fg = "#cba6f7" }],
+  [{ token = "agent", fg = "#cba6f7" }, "state_text"],
 ]
 
+# state_text spells out blocked / working / done / idle / unknown, and carries
+# the agent's own reported label when it sends one. Without it the row leans
+# entirely on state_icon, which is the one place a single glyph struggles: done
+# and idle both mean "ready for input" and differ only in whether this client
+# has already shown you the completion. No fg override here on purpose --
+# herdr colours state_text semantically, and those colours already come from
+# the Catppuccin tokens above.
+
 # ─────────────────────────────────────────────────────────────────────────────
-# Keybindings — a 1:1 port of tmux.conf
+# Worktrees
 #
-# Every binding below is the key tmux uses for the same action, either from
-# tmux.conf in this repo or from tmux's own defaults. Herdr actions with no
-# tmux counterpart are disabled ("") so there is nothing extra to learn; each
+# herdr checks out <directory>/<repo>/<branch-slug> and opens each checkout as a
+# workspace grouped under the repo it came from. Deliberately not under
+# ~/workspace: herdr_sessionizer.sh fuzzy-finds every directory two levels deep
+# there, and worktree checkouts would flood that list. ~/worktrees keeps them
+# visible in Finder and reachable by cd without touching the project picker.
+# ─────────────────────────────────────────────────────────────────────────────
+
+[worktrees]
+directory = "~/worktrees"
+
+[session]
+# Already the default. Pinned because it is what makes a restart survivable when
+# several agents are mid-conversation across worktrees.
+resume_agents_on_restore = true
+
+# ─────────────────────────────────────────────────────────────────────────────
+# Keybindings — a port of tmux.conf, plus the agent and worktree actions
+#
+# Every binding that has a tmux counterpart uses the key tmux uses, either from
+# tmux.conf in this repo or from tmux's own defaults. Herdr actions that tmux
+# has no concept of are disabled ("") so there is nothing extra to learn; each
 # one keeps its herdr default in a comment right above it, one uncomment away.
+#
+# The exceptions are the actions this config exists for: worktrees and agents.
+# Those are bound, on keys tmux leaves free, and marked "herdr-only" below.
 #
 # Vocabulary: tmux session = herdr workspace, tmux window = herdr tab.
 #
 # tmux bindings with no herdr equivalent, left unmapped:
 #   prefix+Space  next-layout          herdr has no layout presets
-#   prefix+Enter  last-window          herdr has no "last tab" action
 #   prefix+m      synchronize-panes    herdr has no input broadcast
 #   prefix+R      move-window -r       herdr renumbers tabs itself
+# prefix+Enter (tmux last-window) has no herdr equivalent either, so it is
+# reused below for "jump to the agent that is asking for something".
 # ─────────────────────────────────────────────────────────────────────────────
 
 [keys]
@@ -98,8 +143,11 @@ detach = "prefix+d"                    # tmux: d detach-client
 reload_config = "prefix+r"             # tmux: r source-file ~/.tmux.conf
 # herdr-only, default "prefix+s":
 settings = ""
-# herdr-only, default "prefix+o":
-open_notification_target = ""
+# herdr-only, default "prefix+o" — prefix+o is cycle-pane, so this takes
+# prefix+Enter, the slot tmux spends on last-window. Focuses whichever agent
+# raised the notification you can see: the one key worth reaching for when a
+# background worktree goes quiet.
+open_notification_target = "prefix+enter"
 
 # — Workspaces (tmux sessions) ——————————————————————————————————————
 workspace_picker = "prefix+s"          # tmux: s choose-tree -Zs
@@ -112,14 +160,20 @@ next_workspace = "prefix+)"            # tmux: ) switch-client -n
 new_workspace = ""
 close_workspace = ""
 switch_workspace = ""
-# herdr-only worktree helpers, default "prefix+shift+g" for new_worktree:
-new_worktree = ""
-open_worktree = ""
-remove_worktree = ""
-# herdr-only agent navigation:
-previous_agent = ""
-next_agent = ""
-focus_agent = ""
+# herdr-only worktree helpers. Each opens the checkout as a workspace grouped
+# under the repo it came from; see [worktrees] above for where they land.
+# Shifted neighbours of the git popups: prefix+g is lazygit, prefix+b is the
+# fzf branch switcher, and prefix+x closes a pane.
+new_worktree = "prefix+shift+g"        # branch name prompt, creates it if new
+open_worktree = "prefix+shift+b"       # list this repo's existing checkouts
+remove_worktree = "prefix+shift+x"     # git worktree remove, asks first
+
+# herdr-only agent navigation. prefix+f/F walk the Agent panel in priority
+# order, so repeated prefix+f is a round of every agent that wants attention;
+# prefix+shift+1..9 jumps straight to one by its position in that panel.
+previous_agent = "prefix+shift+f"
+next_agent = "prefix+f"
+focus_agent = "prefix+shift+1..9"
 
 # — Tabs (tmux windows) —————————————————————————————————————————————
 new_tab = "prefix+c"                   # tmux: c new-window

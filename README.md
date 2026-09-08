@@ -261,7 +261,29 @@ UI tweaks on top of the defaults:
 | `show_agent_labels_on_pane_borders` | `true` | Names the agent in the split border |
 | `status_indicators` | `symbols` | Distinct glyphs instead of color-only dots |
 | `tab_bar_right` | zoom + clock | tmux-style status area at the right of the tab row |
-| `ui.sidebar.*.rows` | styled | Bold workspace name, dimmed branch line, mauve agent name |
+| `ui.sidebar.*.rows` | styled | Bold workspace name, dimmed branch line, mauve agent name, agent state in words |
+
+#### Herdr for Agentic Development
+
+The config is tuned for running several agents at once, each in its own Git
+worktree, with Herdr as the thing that tells you which one needs you.
+
+| Setting | Value | Why |
+|---|---|---|
+| `worktrees.directory` | `~/worktrees` | Checkouts land in `<repo>/<branch-slug>`, outside `~/workspace` so they never flood the `Prefix + t` project picker |
+| `ui.agent_panel_sort` | `priority` | Blocked and needs-input agents float to the top instead of grouping by Space |
+| `ui.toast.delivery` | `terminal` | Notifications are off by default, which is wrong when agents run in workspaces you are not looking at. Ghostty forwards them to Notification Center and it still works over SSH |
+| `ui.toast.delay_seconds` | `3` | Only fires if the agent is still in that state, so brief pauses stay quiet |
+| `ui.sidebar.spaces.row_gap` | `1` | Separates worktree groups from unrelated Spaces |
+| `ui.sidebar.agents.rows` | includes `state_text` | Spells out blocked / working / done / idle / unknown next to the icon, plus the agent's own reported label |
+| `session.resume_agents_on_restore` | `true` | Already the default; pinned because it is what makes a restart survivable mid-conversation |
+
+Worktree and agent keys are in the tables below. A worktree checkout is a normal
+Herdr workspace, so it has its own tabs, panes, and agent, and closing the
+parent row closes the group without deleting checkouts or branches.
+
+For desktop notifications that raise the terminal when clicked, run
+`brew install terminal-notifier` and switch `ui.toast.delivery` to `system`.
 
 #### Herdr Shortcuts
 
@@ -308,6 +330,28 @@ UI tweaks on top of the defaults:
 | `Prefix + P` | GitHub PR list/checkout (fzf) |
 | `Prefix + I` | GitHub issue list + create branch (fzf) |
 
+##### Worktrees
+
+Herdr-only. Each checkout opens as a workspace grouped under the repo it came
+from. All three sit on shifted neighbours of the git popups above.
+
+| Shortcut | Action |
+|---|---|
+| `Prefix + G` | New worktree; prompts for a branch, creates it if new |
+| `Prefix + B` | Open an existing worktree checkout for this repo |
+| `Prefix + X` | Delete a worktree checkout (`git worktree remove`, asks first) |
+
+##### Agents
+
+Herdr-only. The Agent panel is sorted by priority, so blocked and needs-input
+agents come first and repeated `Prefix + f` is a round of everything waiting.
+
+| Shortcut | Action |
+|---|---|
+| `Prefix + Enter` | Focus the agent that raised the visible notification |
+| `Prefix + f / F` | Next / previous agent in the panel |
+| `Prefix + Shift + 1-9` | Focus an agent by its position in the panel |
+
 ##### Misc
 
 | Shortcut | Action |
@@ -322,18 +366,17 @@ Bindings not carried over from `tmux.conf`, because Herdr has no equivalent:
 | Tmux shortcut | Action | Why it is unmapped |
 |---|---|---|
 | `Prefix + Space` | Cycle pane layouts | Herdr has no layout presets |
-| `Prefix + Enter` | Jump to last window | Herdr has no last-tab action |
 | `Prefix + m` | Toggle synchronized panes | Herdr has no input broadcast |
 | `Prefix + R` | Renumber windows | Herdr renumbers tabs itself |
 
-`Prefix + a` is the one binding with no tmux counterpart. Herdr puts the sidebar
-toggle on `Prefix + b` by default, which is already the branch-switcher popup
-here.
+Herdr's last-window slot, `Prefix + Enter`, has no Herdr equivalent either, so
+it is reused for the notification jump above. `Prefix + a` takes the sidebar
+toggle because Herdr's default for it, `Prefix + b`, is the branch-switcher
+popup here.
 
-Other Herdr actions are disabled to keep the keymap identical to tmux: settings,
-notification target, new/close workspace, worktree helpers, agent navigation,
-pane rename, scrollback editor, and resize mode. Each is one uncomment away in
-the config.
+Herdr actions still disabled to keep the rest of the keymap identical to tmux:
+settings, new/close workspace, pane rename, scrollback editor, and resize mode.
+Each is one uncomment away in the config.
 
 Validate changes with `herdr config check`, then reload with `herdr server reload-config`.
 
