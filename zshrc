@@ -33,152 +33,89 @@ export EDITOR="nvim"
 setopt HIST_IGNORE_ALL_DUPS
 setopt HIST_IGNORE_SPACE
 
-# Load zsh modules needed for completion
-zmodload zsh/complist
-zmodload zsh/parameter
-zmodload zsh/zleparameter
-autoload -Uz compinit is-at-least add-zle-hook-widget zmathfunc
+# Completion
+# zsh-autocomplete owns the completion system. It runs compinit for us on the
+# first prompt and claims Tab at that same moment, but only if Tab is still on
+# expand-or-complete by then. Three rules follow:
+#   1. Never call compinit here.
+#   2. Never let anything else bind Tab. fzf's completion.zsh and fzf-tab both
+#      do, and either one silently leaves us with bare expand-or-complete.
+#   3. fpath must be final before the first prompt.
+fpath=(
+  /opt/homebrew/share/zsh/site-functions
+  /opt/homebrew/share/zsh-completions
+  /opt/homebrew/share/docker/completion
+  $HOME/.docker/completions
+  $HOME/.cargo/completion
+  $HOME/.zfunc
+  $fpath
+)
 
-# Autoload additional zsh completion functions needed by zsh-autocomplete
-autoload -Uz _main_complete _complete _approximate
-autoload -Uz chpwd_recent_dirs chpwd_recent_filehandler
-
-# Set up fpath for completions (must be before compinit)
-fpath=("$HOME/.zsh_plugins/zsh-autocomplete" $fpath)
-fpath=(/opt/homebrew/share/zsh/site-functions $fpath)
-fpath=(/opt/homebrew/share/zsh-completions $fpath)
-fpath=("$HOME/.docker/completions" $fpath)
-
-# Only rebuild zcompdump once per day
-if [ "$(date +%j)" != "$(/usr/bin/stat -f %Sm -t %j ~/.zcompdump 2>/dev/null)" ]; then
-  rm -f ~/.zcompdump*(N)
-  compinit -i
-else
-  compinit -i -C
+# Colour matches the way ls does, so directories, symlinks and executables are
+# told apart in the menu.
+if command -v gdircolors &>/dev/null; then
+  eval "$(gdircolors -b)"
 fi
 
-# fzf-tab: fuzzy completion menus (must be after compinit, before syntax-highlighting)
-if [ -f "$HOME/.zsh_plugins/fzf-tab/fzf-tab.plugin.zsh" ]; then
-  source "$HOME/.zsh_plugins/fzf-tab/fzf-tab.plugin.zsh"
-  zstyle ':fzf-tab:complete:cd:*' fzf-preview 'eza -1 --color=always $realpath 2>/dev/null'
-  zstyle ':fzf-tab:complete:(*-)file:*' fzf-preview 'bat --color=always --style=numbers --line-range=:200 $realpath 2>/dev/null'
-  zstyle ':fzf-tab:*' switch-group ',' '.'
+# Poetry takes about half a second to emit its completion, so build it once.
+if command -v poetry &>/dev/null; then
+  mkdir -p $HOME/.zfunc
+  [ -s $HOME/.zfunc/_poetry ] || poetry completions zsh > $HOME/.zfunc/_poetry 2>/dev/null
 fi
 
-# Source zsh-syntax-highlighting (must be before autosuggestions)
+# Must come before any compdef call.
+if [ -d "$HOME/.zsh_plugins/zsh-autocomplete" ]; then
+  source "$HOME/.zsh_plugins/zsh-autocomplete/zsh-autocomplete.plugin.zsh"
+fi
+
+# Layered on top of what zsh-autocomplete already sets. Leave menu, group-name
+# and the catch-all format style to the plugin: it tunes those as a set.
+#
+# matcher-list is the one exception. The plugin's default only maps typed
+# lowercase onto uppercase, so `ZSH_FU` never finds `zsh_functions.zsh`; this
+# maps both directions, and - against _ as well. Keep the plugin's trailing
+# `r:|[.]=**` and its ordering, m before r, or matches come out wrong. The
+# fuzzy fallback pass reads a different context and is unaffected.
+zstyle ':completion:*' matcher-list 'm:{[:lower:][:upper:]-_}={[:upper:][:lower:]_-} r:|[.]=**'
+zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
+zstyle ':completion:*' squeeze-slashes true
+zstyle ':completion:*:descriptions' format '%F{blue}%B%d%b%f'
+zstyle ':completion:*:*:*:*:processes' command 'ps -u $USER -o pid,%cpu,cmd'
+
+# AWS CLI
+if command -v aws_completer &>/dev/null; then
+  complete -C "$(command -v aws_completer)" aws
+fi
+
+# UV (Python package manager)
+if command -v uv &>/dev/null; then
+  eval "$(uv generate-shell-completion zsh)"
+fi
+
+# Python (pip, pipx)
+if command -v register-python-argcomplete &>/dev/null; then
+  eval "$(register-python-argcomplete pip)"
+  eval "$(register-python-argcomplete pip3)"
+  command -v pipx &>/dev/null && eval "$(register-python-argcomplete pipx)"
+fi
+
+# Line editor plugins, in the one order that works: autocomplete (above), then
+# syntax highlighting, then autosuggestions.
 if [ -f /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]; then
   source /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 fi
 
-# Source zsh-autosuggestions BEFORE Atuin to allow proper key binding override
 if [ -f /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh ]; then
+  # No `completion` strategy here: it reruns the completion system on every
+  # keystroke, which zsh-autocomplete is already doing.
+  export ZSH_AUTOSUGGEST_STRATEGY=(history atuin)
   source /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh
-  # Configure autosuggestions to work nicely with Atuin
-  export ZSH_AUTOSUGGEST_STRATEGY=(history completion atuin)
-fi
-
-# Source zsh-autocomplete after compinit ONLY if it exists
-if [ -d "$HOME/.zsh_plugins/zsh-autocomplete" ]; then
-  if [[ -z "$functions[compdef]" ]]; then
-    autoload -Uz compdef
-  fi
-  
-  # Ensure add-zle-hook-widget function is loaded
-  if [[ -z "$functions[add-zle-hook-widget]" ]]; then
-    autoload -Uz add-zle-hook-widget
-  fi
-  
-  # Ensure zmathfunc is loaded
-  if [[ -z "$functions[zmathfunc]" ]]; then
-    autoload -Uz zmathfunc
-  fi
-  
-  source "$HOME/.zsh_plugins/zsh-autocomplete/zsh-autocomplete.plugin.zsh"
 fi
 
 # Remind when a shorter alias exists for a command typed manually.
 if [ -f /opt/homebrew/share/zsh-you-should-use/you-should-use.plugin.zsh ]; then
   export YSU_MESSAGE_POSITION="after"
   source /opt/homebrew/share/zsh-you-should-use/you-should-use.plugin.zsh
-fi
-
-# Plugins
-plugins=(
- git
- zsh-syntax-highlighting
- zsh-autosuggestions
- zsh-completions
- virtualenv
- direnv
-)
-
-# AWS CLI Completion with descriptions
-if command -v aws_completer &>/dev/null; then
-  complete -C "$(which aws_completer)" aws
-elif [ -f /opt/homebrew/bin/aws_completer ]; then
-  complete -C /opt/homebrew/bin/aws_completer aws
-elif [ -f ~/.local/bin/aws_completer ]; then
-  complete -C ~/.local/bin/aws_completer aws
-fi
-
-# Enable completion descriptions (list-grouped-by-tags style)
-zstyle ':completion:*' format '%B%F{blue}--- %d ---%f%b'
-zstyle ':completion:*:descriptions' format '%B%F{green}%d%f%b'
-zstyle ':completion:*' group-name ''
-
-# UV (Python package manager) Completion
-if command -v uv &>/dev/null; then
-  eval "$(uv generate-shell-completion zsh)"
-fi
-
-# Python (pip) Completion
-if command -v register-python-argcomplete &>/dev/null; then
-  eval "$(register-python-argcomplete pip)"
-  eval "$(register-python-argcomplete pip3)"
-fi
-
-# Poetry Completion
-if command -v poetry &>/dev/null; then
-  fpath+=($HOME/.zfunc)
-  mkdir -p $HOME/.zfunc
-  poetry completions zsh > $HOME/.zfunc/_poetry 2>/dev/null
-fi
-
-# pipx Completion
-if command -v pipx &>/dev/null; then
-  eval "$(register-python-argcomplete pipx)"
-fi
-
-# Cargo/Rust Completion
-if command -v cargo &>/dev/null; then
-  fpath+=($HOME/.cargo/completion)
-fi
-
-# Docker Completion (if not already in fpath)
-if command -v docker &>/dev/null; then
-  fpath+=(/opt/homebrew/share/docker/completion)
-fi
-
-# Git Completion (enhanced)
-if command -v git &>/dev/null; then
-  fpath+=(/opt/homebrew/share/zsh/site-functions)
-fi
-
-# Completion styling with descriptions
-zstyle ':completion:*' list-grouped
-zstyle ':completion:*' list-colors '=(#b) #([0-9]#)*=36=31'
-zstyle ':completion:*:*:*:*:processes' command 'ps -u $USER -o pid,%cpu,cmd'
-zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=* l:|=*'
-
-# SSH Completion - Parse ~/.ssh/config for hostname suggestions
-if [ -f ~/.ssh/config ]; then
-  _ssh_hosts=($(grep -E "^Host\s" ~/.ssh/config | grep -v "\*" | awk '{print $2}'))
-  _ssh_hosts_completion() {
-    compadd "$@" "${_ssh_hosts[@]}"
-  }
-  if [[ -n $_ssh_hosts ]]; then
-    compdef _ssh_hosts_completion ssh scp sftp
-  fi
 fi
 
 # There can be .secrets dir and envvars.zsh file in the .secrets dir.
@@ -191,12 +128,11 @@ fi
 
 
 # FZF
-# Enable fzf key bindings and completion if installed.
+# Key bindings only (^T, ^R, Alt-C). completion.zsh is deliberately left out:
+# it binds Tab to fzf-completion, which stops zsh-autocomplete from ever
+# claiming Tab and drops us back to plain expand-or-complete.
 if [ -f /opt/homebrew/opt/fzf/shell/key-bindings.zsh ]; then
   source /opt/homebrew/opt/fzf/shell/key-bindings.zsh
-fi
-if [ -f /opt/homebrew/opt/fzf/shell/completion.zsh ]; then
-  source /opt/homebrew/opt/fzf/shell/completion.zsh
 fi
 
 # Enable preview window with bat (syntax highlighting)
@@ -211,8 +147,8 @@ export FZF_DEFAULT_OPTS='
 --prompt="> "'
 # Use ripgrep as the default source for files
 export FZF_DEFAULT_COMMAND='rg --files --no-ignore --hidden --follow --glob "!.git" 2>/dev/null'
-# Use ripgrep for fuzzy searching within files
-export FZF_ALT_C_COMMAND='rg --files --no-ignore --hidden --follow --glob "!.git" 2>/dev/null'
+# Alt-C changes directory, so it needs directories, not files.
+export FZF_ALT_C_COMMAND='fd --type d --hidden --follow --exclude .git 2>/dev/null'
 
 # Rust
 export RUST_BACKTRACE=1
