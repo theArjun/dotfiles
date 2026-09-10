@@ -86,6 +86,10 @@ rows = [
   ["state_icon", { token = "workspace", bold = true }, "tab"],
   [{ token = "agent", fg = "#cba6f7" }, "state_text"],
 ]
+row_gap = 1 # herdr-agent-quota
+
+[ui.sidebar.agents.rows_by_agent]
+claude = [["state_icon", { token = "workspace", bold = true }, "tab"], [{ token = "agent", fg = "#cba6f7" }, "state_text"], [{ token = "$quota_provider_model", fg = "#e88461", bold = true, dim = false }], [{ token = "$quota_topic", bold = false, dim = false }], [{ token = "$quota_cache", bold = false, dim = false }, { token = "$quota_cache_ttl", bold = false, dim = false }, { token = "$quota_cache_state", fg = "#e4b957", bold = false, dim = false }, { token = "$quota_error", fg = "#e4b957", bold = false, dim = false }], [{ token = "$quota_context", bold = false, dim = false }, { token = "$quota_week_inline_normal", fg = "#82d978", bold = false, dim = false }, { token = "$quota_week_inline_warning", fg = "#e4b957", bold = false, dim = false }, { token = "$quota_week_inline_danger", fg = "#f16f7e", bold = false, dim = false }, { token = "$quota_week_inline_unknown", bold = false, dim = false }], [{ token = "$quota_5h_normal", fg = "#82d978", bold = false, dim = false }, { token = "$quota_5h_warning", fg = "#e4b957", bold = false, dim = false }, { token = "$quota_5h_danger", fg = "#f16f7e", bold = false, dim = false }, { token = "$quota_5h_unknown", bold = false, dim = false }, { token = "$quota_week_normal", fg = "#82d978", bold = false, dim = false }, { token = "$quota_week_warning", fg = "#e4b957", bold = false, dim = false }, { token = "$quota_week_danger", fg = "#f16f7e", bold = false, dim = false }, { token = "$quota_week_unknown", bold = false, dim = false }]] # herdr-agent-quota-provider
 
 # state_text spells out blocked / working / done / idle / unknown, and carries
 # the agent's own reported label when it sends one. Without it the row leans
@@ -278,3 +282,15 @@ command = "sh -c '\"${HERDR_BIN_PATH:-herdr}\" pane swap --pane \"$HERDR_ACTIVE_
 key = "prefix+shift+l"
 type = "shell"
 command = "sh -c '\"${HERDR_BIN_PATH:-herdr}\" pane swap --pane \"$HERDR_ACTIVE_PANE_ID\" --direction right'"
+
+[[keys.command]]
+key = "prefix+shift+r"
+type = "plugin_action"
+command = "herdr-agent-quota.refresh"
+description = "refresh all agent quotas"
+
+[[keys.command]]
+key = "prefix+shift+q"
+type = "plugin_action"
+command = "herdr-agent-quota.open-settings"
+description = "open agent quota settings"
