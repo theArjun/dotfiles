@@ -1,0 +1,17 @@
+# Neovide configuration
+# Docs: https://neovide.dev/config-file.html
+#
+# This file holds Neovide's *app/startup* settings only. Runtime settings
+# (theme, opacity, cursor vfx, blur, scroll animation) are NOT valid keys
+# here -- Neovide silently ignores unknown keys, so a typo fails quietly.
+# Those live as vim.g.neovide_* in my-nvim-config/init.lua.
+#
+# Only set what should differ from the default: a key present here is treated
+# as "specified" and can conflict with CLI flags (e.g. an explicit
+# `maximized` makes `neovide --size WxH` error out).
+
+# Font is set here rather than via vim.o.guifont so the window is sized
+# correctly at startup, before init.lua loads. This wins over guifont.
+[font]
+normal = ["JetBrainsMono Nerd Font"]
+size = 18.0

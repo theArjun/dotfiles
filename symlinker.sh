@@ -43,6 +43,10 @@ link "${cwd}/config/gh-dash/config.yml" "$HOME/.config/gh-dash/config.yml"
 mkdir -p "$HOME/.config/herdr"
 link "${cwd}/config/herdr/config.toml" "$HOME/.config/herdr/config.toml"
 
+# Symlink Neovide config
+mkdir -p "$HOME/.config/neovide"
+link "${cwd}/config/neovide/config.toml" "$HOME/.config/neovide/config.toml"
+
 # Symlink starship config
 link "${cwd}/config/starship.toml" "$HOME/.config/starship.toml"
 
