@@ -1,16 +1,17 @@
 [user]
 	email = 33110520+theArjun@users.noreply.github.com
 	name = thearjun
-	signingkey = EF89501864ACD9C4
+	signingkey = ~/.ssh/id_ed25519.pub
 [color]
   status = auto
   diff = auto
   branch = auto
   interactive = auto
 [commit]
-	gpgsign = false
+	gpgsign = true
 [gpg]
-	program = gpg
+	program = /opt/homebrew/bin/gpg
+	format = ssh
 [core]
 	autocrlf = input
 	editor = nvim
@@ -65,3 +66,7 @@
   autocorrect = prompt
 [column]
   ui = auto
+[tag]
+	gpgsign = true
+[gpg "ssh"]
+	allowedSignersFile = ~/.config/git/allowed_signers
