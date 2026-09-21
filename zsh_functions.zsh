@@ -35,7 +35,7 @@ function ghpr() {
         --preview 'GH_FORCE_TTY=100% gh pr view {1}'
   ) || return
 
-  number=$(echo "$selected" | awk '{print $1}' | tr -d '#')
+  number=$(echo "$selected" | awk '{print $1}' | command tr -d '#')
   [ -n "$number" ] && gh pr checkout "$number"
 }
 
@@ -52,7 +52,7 @@ function ghprmine() {
         --preview 'GH_FORCE_TTY=100% gh pr view {1}'
   ) || return
 
-  number=$(echo "$selected" | awk '{print $1}' | tr -d '#')
+  number=$(echo "$selected" | awk '{print $1}' | command tr -d '#')
   [ -n "$number" ] && gh pr checkout "$number"
 }
 
@@ -69,7 +69,7 @@ function ghreview() {
         --preview 'GH_FORCE_TTY=100% gh pr view {1}'
   ) || return
 
-  number=$(echo "$selected" | awk '{print $1}' | tr -d '#')
+  number=$(echo "$selected" | awk '{print $1}' | command tr -d '#')
   [ -n "$number" ] && gh pr checkout "$number"
 }
 
@@ -86,7 +86,7 @@ function ghissue() {
         --preview 'GH_FORCE_TTY=100% gh issue view {1}'
   ) || return
 
-  number=$(echo "$selected" | awk '{print $1}' | tr -d '#')
+  number=$(echo "$selected" | awk '{print $1}' | command tr -d '#')
   [ -n "$number" ] && gh issue develop "$number" --checkout
 }
 

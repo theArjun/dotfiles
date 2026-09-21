@@ -160,18 +160,6 @@ alias vim="nvim"
 alias myip="ifconfig en0 | grep inet | grep -v inet6 | cut -d ' ' -f2"
 alias hide="chflags -R hidden"
 
-# Tmux
-alias t="tmux"
-alias ta="tmux attach"
-alias td="tmux detach"
-alias tl="tmux list-sessions"
-alias tk="tmux list-keys"
-alias ts="$HOME/.config/scripts/tmux_sessionizer.sh"
-alias tso="tmux source-file ~/.tmux.conf"
-alias tks="tmux kill-server"
-alias tn="tmux new -s"  # Added alias
-alias tr="tmux rename-session"  # Added alias
-
 # Development Tools
 alias http="python -m http.server"
 alias jsb="json_pp <"
