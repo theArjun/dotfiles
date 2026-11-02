@@ -201,7 +201,7 @@ Modern terminal emulator with improved performance.
 |---|---|
 | `Prefix + s` | Session tree / chooser |
 | `Prefix + S` | Rename session |
-| `Prefix + g` | LazyGit popup |
+| `Prefix + g` | GitUI popup |
 | `Prefix + b` | Git branch switcher (fzf) |
 | `Prefix + P` | GitHub PR list/checkout (fzf) |
 | `Prefix + I` | GitHub issue list + create branch (fzf) |
@@ -325,7 +325,7 @@ For desktop notifications that raise the terminal when clicked, run
 
 | Shortcut | Action |
 |---|---|
-| `Prefix + g` | LazyGit popup |
+| `Prefix + g` | GitUI popup |
 | `Prefix + b` | Git branch switcher (fzf) |
 | `Prefix + P` | GitHub PR list/checkout (fzf) |
 | `Prefix + I` | GitHub issue list + create branch (fzf) |

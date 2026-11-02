@@ -43,6 +43,7 @@ brew "httpie"
 brew "hugo"
 brew "jq"
 brew "lazygit"
+brew "gitui"
 brew "neovim"
 brew "nginx", restart_service: true
 brew "node"

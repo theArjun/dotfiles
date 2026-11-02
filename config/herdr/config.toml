@@ -166,7 +166,7 @@ close_workspace = ""
 switch_workspace = ""
 # herdr-only worktree helpers. Each opens the checkout as a workspace grouped
 # under the repo it came from; see [worktrees] above for where they land.
-# Shifted neighbours of the git popups: prefix+g is lazygit, prefix+b is the
+# Shifted neighbours of the git popups: prefix+g is gitui, prefix+b is the
 # fzf branch switcher, and prefix+x closes a pane.
 new_worktree = "prefix+shift+g"        # branch name prompt, creates it if new
 open_worktree = "prefix+shift+b"       # list this repo's existing checkouts
@@ -221,11 +221,11 @@ edit_scrollback = ""
 toggle_sidebar = "prefix+a"
 
 # — Popups ——————————————————————————————————————————————————————————
-# tmux: g display-popup lazygit
+# tmux: g display-popup gitui
 [[keys.command]]
 key = "prefix+g"
 type = "popup"
-command = "sh -c 'cd \"$HERDR_ACTIVE_PANE_CWD\" 2>/dev/null; exec lazygit'"
+command = "sh -c 'cd \"$HERDR_ACTIVE_PANE_CWD\" 2>/dev/null; exec gitui'"
 width = "80%"
 height = "80%"
 
