@@ -86,20 +86,6 @@ alias cleanbr='git branch --merged | grep -v "\*" | xargs -n 1 git branch -d'
 alias cbr='git checkout -b'
 alias glol='git log --graph --pretty="%Cred%h%Creset -%C(auto)%d%Creset %s %Cgreen(%ar) %C(bold blue)<%an>%Creset"'
 
-# Added git workflow aliases
-alias gpr="gh pr create"
-alias gprl="gh pr list"
-alias gprv="gh pr view"
-alias gprc="gh pr checkout"
-alias gprcr="gh pr edit --add-reviewer @copilot"
-alias gis="git status --short"
-alias gll="git log --oneline -10"
-alias gwta="git worktree add"
-alias gwtl="git worktree list"
-alias gwtr="git worktree remove"
-alias gwtp="git worktree prune"
-alias gspr="git stash && git pull --rebase && git stash pop"
-
 # Java
 alias gjf="java -jar ~/tools/gjf.jar --replace"
 

@@ -22,57 +22,6 @@ function _need_cmd() {
   }
 }
 
-function ghpr() {
-  _need_cmd gh || return 1
-  _need_cmd fzf || return 1
-
-  local selected number
-  selected=$(
-    gh pr list --limit 100 --json number,title,headRefName,author,reviewDecision \
-      --template '{{range .}}{{printf "#%v\t%s\t%s\t%s\t%s\n" .number .title .headRefName .author.login .reviewDecision}}{{end}}' |
-      fzf --ansi --height 70% --layout reverse --border \
-        --header 'Checkout PR' \
-        --preview 'GH_FORCE_TTY=100% gh pr view {1}'
-  ) || return
-
-  number=$(echo "$selected" | awk '{print $1}' | command tr -d '#')
-  [ -n "$number" ] && gh pr checkout "$number"
-}
-
-function ghprmine() {
-  _need_cmd gh || return 1
-  _need_cmd fzf || return 1
-
-  local selected number
-  selected=$(
-    gh pr list --author "@me" --limit 100 --json number,title,headRefName \
-      --template '{{range .}}{{printf "#%v\t%s\t%s\n" .number .title .headRefName}}{{end}}' |
-      fzf --height 70% --layout reverse --border \
-        --header 'My PRs' \
-        --preview 'GH_FORCE_TTY=100% gh pr view {1}'
-  ) || return
-
-  number=$(echo "$selected" | awk '{print $1}' | command tr -d '#')
-  [ -n "$number" ] && gh pr checkout "$number"
-}
-
-function ghreview() {
-  _need_cmd gh || return 1
-  _need_cmd fzf || return 1
-
-  local selected number
-  selected=$(
-    gh pr list --search "review-requested:@me state:open" --limit 100 --json number,title,author,headRefName \
-      --template '{{range .}}{{printf "#%v\t%s\t%s\t%s\n" .number .title .author.login .headRefName}}{{end}}' |
-      fzf --height 70% --layout reverse --border \
-        --header 'PRs needing my review' \
-        --preview 'GH_FORCE_TTY=100% gh pr view {1}'
-  ) || return
-
-  number=$(echo "$selected" | awk '{print $1}' | command tr -d '#')
-  [ -n "$number" ] && gh pr checkout "$number"
-}
-
 function ghissue() {
   _need_cmd gh || return 1
   _need_cmd fzf || return 1
@@ -90,6 +39,53 @@ function ghissue() {
   [ -n "$number" ] && gh issue develop "$number" --checkout
 }
 
+function ghprstatus() {
+  _need_cmd gh || return 1
+  _need_cmd jq || return 1
+
+  local data
+  data=$(gh pr view --json number,title,url,author,latestReviews,reviews,reviewRequests,comments,commits) || return
+
+  printf "%s\n" "$data" | jq -r '
+    def names: map(.login // .name // .slug) | unique;
+    def local: fromdateiso8601 | strflocaltime("%m-%d %H:%M");
+    (.author.login) as $me
+    | (.latestReviews | map(select(.author.login != $me))) as $rev
+    | ($rev | map(select(.state == "APPROVED") | .author.login) | unique) as $approved
+    | ($rev | map(select(.state == "CHANGES_REQUESTED") | .author.login) | unique) as $changes
+    | ((.reviews | map(.author.login)) + (.comments | map(.author.login))
+        | unique | map(select(. != $me and (. as $u | ($approved + $changes) | index($u) | not)))) as $commented
+    | (.reviewRequests | names) as $requested
+    | ($requested | map(select(. as $r | ($approved + $changes + $commented) | index($r) | not))) as $silent
+    | ([ (.commits[] | {at: .committedDate, icon: "●", who: ((.authors[0].login // "?")), text: ("commit: " + .messageHeadline), kind: "commit"}),
+          (.reviews[] | select(.submittedAt != null) | {at: .submittedAt, who: .author.login, kind: "review",
+              icon: (if .state == "APPROVED" then "✔" elif .state == "CHANGES_REQUESTED" then "✖" else "💬" end),
+              text: ((.state | ascii_downcase | gsub("_";" ")) + (if (.body // "") != "" then ": " + (.body | gsub("\\s+";" ") | .[0:60]) else "" end))}),
+          (.comments[] | {at: .createdAt, who: .author.login, kind: "comment", icon: "💬",
+              text: ("comment: " + (.body | gsub("\\s+";" ") | .[0:60]))})
+        ] | sort_by(.at)) as $events
+    | ($events | map(select(.kind == "commit"))) as $commits
+    | ($events | map(select(.kind != "commit" and .who != $me)) | group_by(.who)
+        | map({who: .[0].who, last: (map(.at) | max)})
+        | map(. as $f | ($commits | map(select(.at > $f.last)) | length) as $n
+              | "  \($f.who): last feedback \($f.last | local) -> " +
+                (if $n > 0 then "\($n) commit(s) pushed since" else "no commits since" end))) as $feedback
+    | "PR #\(.number): \(.title)\n\(.url)\n",
+      "Approved (\($approved | length)):          \($approved | join(", "))",
+      "Changes requested (\($changes | length)):  \($changes | join(", "))",
+      "Commented (\($commented | length)):   \($commented | join(", "))",
+      "Not responded (\($silent | length)):       \($silent | join(", "))",
+      "",
+      "Timeline (oldest first):",
+      ( $events | map(
+          "  \(.at | local)  \(.icon) \(.who)  \(.text)"
+        ) | .[] ),
+      "",
+      "Commits after feedback:",
+      ( $feedback | if length == 0 then "  (no feedback yet)" else .[] end )
+  '
+}
+
 function ghdash() {
   _need_cmd gh || return 1
   echo "Repo: $(gh repo view --json nameWithOwner -q .nameWithOwner)"
@@ -97,8 +93,6 @@ function ghdash() {
   echo "Review requested: $(gh pr list --search "review-requested:@me state:open" --json number --jq 'length')"
   echo "Assigned issues: $(gh issue list --assignee @me --state open --json number --jq 'length')"
 }
-
-function pr { ghpr "$@"; }
 
 function ghi { ghissue "$@"; }
 
